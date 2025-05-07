@@ -1,0 +1,2087 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Combustible Lo Echevers</title>
+    <!-- Chart.js para gráficos -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <!-- SheetJS para exportar a Excel -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <!-- Font Awesome para íconos -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+    <!-- jsPDF para exportar a PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #a0d2eb;
+            /* Azul pastel */
+            --secondary-color: #e6f2ff;
+            /* Azul muy claro */
+            --accent-color: #4b86b4;
+            /* Azul oscuro para acentos */
+            --text-color: #333;
+            /* Texto oscuro */
+            --light-text: #666;
+            /* Texto gris para info secundaria */
+            --success-color: #c8e6c9;
+            /* Verde claro para status ok */
+            --warning-color: #fff9c4;
+            /* Amarillo claro para advertencias */
+            --danger-color: #ffcdd2;
+            /* Rojo claro para alertas */
+            --white: #ffffff;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --border-radius: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--white);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            padding: 30px 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+            box-shadow: var(--box-shadow);
+            position: relative;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center center;
+            color: white;
+            min-height: 180px;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(75, 134, 180, 0.65);
+            /* Overlay azul semitransparente, ajustado para mejor visibilidad */
+            z-index: 1;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            color: white;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        header p {
+            color: rgba(255, 255, 255, 0.9);
+            margin: 5px 0;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .header-actions button {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .header-actions button:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Contenedor principal del header */
+        #main-header {
+          position: relative;
+          overflow: hidden;    /* recorta lo que sobresalga */
+          padding: 1.5rem 1.5rem;   /* define altura según contenido */
+          color: white;
+          text-align: center;
+        }
+
+        /* Imagen de fondo centrada verticalmente, ancho completo */
+        #main-header .header-bg {
+          position: absolute;
+          top: 50%;            /* punto medio vertical de la imagen */
+          left: 0;             /* ancla al borde izquierdo */
+          width: 100%;         /* cubre todo el ancho */
+          height: auto;        /* mantiene proporción */
+          transform: translateY(-50%); /* centra verticalmente */
+          z-index: 0;
+          filter: brightness(0.6);
+        }
+
+        /* Área para subir archivos */
+        .upload-section {
+            display: flex;
+            justify-content: flex-end; /* Alinea a la derecha */
+            margin-bottom: 20px;
+        }
+
+        /* Contenedor de carga de archivos */
+        .file-upload-container {
+            background-color: var(--white);
+            border: 2px dashed var(--primary-color);
+            border-radius: var(--border-radius);
+            width: 350px;           /* Más ancho */
+            min-height: 250px;      /* Altura adecuada */
+            padding: 25px 20px;     /* Padding vertical más delgado */
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: var(--box-shadow);
+            margin-left: auto;      /* Alinea a la derecha */
+            margin-right: 0;
+        }
+
+        .file-upload-container.drag-over {
+            background-color: var(--secondary-color);
+            border-color: var(--accent-color);
+        }
+
+        .file-upload-container p {
+            margin-bottom: 15px;
+            color: var(--light-text);
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .file-label {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .file-label:hover {
+            background-color: #3a6d91;
+        }
+
+        .file-name {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: var(--accent-color);
+            display: none;
+        }
+
+        .summary-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 20px;
+            flex: 1 1 200px;
+            min-width: 200px;
+            text-align: center;
+            border-top: 4px solid var(--primary-color);
+        }
+
+        .card.warning {
+            border-top-color: #ffc107;
+            /* Amarillo warning */
+        }
+
+        .card.success {
+            border-top-color: #4caf50;
+            /* Verde success */
+        }
+
+        .card h3 {
+            font-size: 1rem;
+            color: var(--light-text);
+            margin-bottom: 10px;
+        }
+
+        .card .number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .card.warning .number {
+            color: #e65100;
+            /* Naranja oscuro */
+        }
+
+        .card.success .number {
+            color: #2e7d32;
+            /* Verde oscuro */
+        }
+
+        .card .percentage {
+            font-size: 1rem;
+            color: var(--light-text);
+            margin-top: 5px;
+        }
+
+        .dashboard-actions {
+            margin: 20px 0;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 15px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn:hover {
+            background-color: #3a6d91;
+        }
+
+        .btn i {
+            font-size: 1.1rem;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .search-bar {
+            display: flex;
+            margin-bottom: 20px;
+            max-width: 500px;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius) 0 0 var(--border-radius);
+            font-size: 0.9rem;
+        }
+
+        .search-bar button {
+            padding: 10px 15px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            cursor: pointer;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            border-bottom-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 0.85rem;
+            background-color: var(--white);
+            box-shadow: var(--box-shadow);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
+        th,
+        td {
+            padding: 6px 8px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+
+        tr {
+            height: 32px;
+            /* Filas más delgadas */
+        }
+
+        tr:nth-child(even) {
+            background-color: var(--secondary-color);
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .date-time {
+            white-space: nowrap;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .badge-warning {
+            background-color: var(--warning-color);
+            color: #856404;
+        }
+
+        .badge-success {
+            background-color: var(--success-color);
+            color: #155724;
+        }
+
+        .badge-danger {
+            background-color: var(--danger-color);
+            color: #721c24;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-bottom: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 5px;
+        }
+
+        .pagination button {
+            padding: 6px 10px;
+            background-color: var(--white);
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .pagination button.active {
+            background-color: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+
+        /* Opciones de paginación */
+        .pagination-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .rows-per-page {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .rows-per-page select {
+            padding: 6px 10px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 0.9rem;
+            background-color: var(--white);
+        }
+
+        .show-all-btn {
+            padding: 6px 12px;
+            background-color: var(--white);
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+
+        .show-all-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .show-all-btn.active {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        /* Estilos para los filtros */
+        .filters-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+
+        .filter-label {
+            font-size: 0.9rem;
+            color: var(--text-color);
+            margin-right: 5px;
+        }
+
+        .filter-select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 0.9rem;
+            background-color: var(--white);
+        }
+
+        /* Estilos para el gráfico */
+        .chart-container {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 15px;
+            margin-bottom: 25px;
+            height: 280px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .chart-title {
+            font-size: 1rem;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        #graficos-tab .chart-container {
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #graficos-tab .chart-container canvas {
+            flex-grow: 1;
+            max-height: 250px;
+        }
+
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            padding: 20px;
+            background-color: var(--primary-color);
+            border-radius: var(--border-radius);
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+
+        /* Loader */
+        .loader {
+            display: none;
+            width: 40px;
+            height: 40px;
+            margin: 20px auto;
+            border: 4px solid var(--secondary-color);
+            border-top: 4px solid var(--accent-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Estilos para PDF print */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+
+            .printable-table,
+            .printable-table * {
+                visibility: visible;
+            }
+
+            .printable-table {
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        /* Media queries para responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            header {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            h2 {
+                font-size: 1.2rem;
+            }
+
+            .card {
+                min-width: calc(50% - 15px);
+            }
+
+            .dashboard-actions {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .header-actions {
+                margin-top: 10px;
+            }
+            
+            .upload-section {
+                justify-content: center;
+            }
+            
+            .file-upload-container {
+                width: 100%;
+                margin: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.3rem;
+            }
+
+            .card {
+                min-width: 100%;
+            }
+
+            .summary-cards {
+                flex-direction: column;
+            }
+
+            .tab {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header id="main-header">
+            <!-- Imagen de fondo -->
+            <img src="/img/WhatsApp Image 2025-05-07 at 18.15.37.jpeg" alt="Fondo Header" class="header-bg">
+          
+            <div class="header-content">
+              <div>
+                <h1>Carga de Combustible - Janito 🫰</h1>
+                <p>Flota Lo Echevers – <span id="current-date"></span></p>
+                <p class="last-update">Última actualización: <span id="last-update-time"></span></p>
+              </div>
+        <div class="upload-section">
+            <div class="file-upload-container" id="file-upload-container">
+                <p><i class="fas fa-file-upload"></i> Arrastra o selecciona un archivo de carga de combustible (.xlsx)</p>
+                <input type="file" id="file-input" class="file-input" accept=".xlsx, .xls">
+                <label for="file-input" class="file-label">Seleccionar archivo</label>
+                <div class="file-name" id="file-name"></div>
+            </div>
+        </div>
+            </div>
+        </header>
+
+      
+
+        <div class="summary-cards">
+            <div class="card">
+                <h3>Total Buses</h3>
+                <div class="number" id="total-buses">0</div>
+                <div class="percentage">Flota completa</div>
+            </div>
+            <div class="card success">
+                <h3>Con Carga</h3>
+                <div class="number" id="buses-con-carga">0</div>
+                <div class="percentage" id="porcentaje-cargados">0%</div>
+            </div>
+            <div class="card warning">
+                <h3>Pendientes</h3>
+                <div class="number" id="buses-sin-carga">0</div>
+                <div class="percentage" id="porcentaje-pendientes">0%</div>
+            </div>
+            <div class="card">
+                <h3>Cantidad Promedio</h3>
+                <div class="number" id="promedio-litros">0 L</div>
+                <div class="percentage">litros por bus</div>
+            </div>
+        </div>
+
+        <!-- Gráfico de carga por hora -->
+        <div class="chart-container">
+            <h3 class="chart-title">Distribución de Cargas por Hora</h3>
+            <canvas id="hourly-chart"></canvas>
+        </div>
+
+        <div class="dashboard-actions">
+            <button class="btn" id="download-excel">
+                <i class="fas fa-file-excel"></i> Descargar Excel
+            </button>
+            <button class="btn" id="download-pdf">
+                <i class="fas fa-file-pdf"></i> Descargar PDF Tabla
+            </button>
+            <button class="btn btn-outline" id="print-report">
+                <i class="fas fa-print"></i> Imprimir reporte
+            </button>
+        </div>
+
+        <!-- Filtros -->
+        <div class="filters-container">
+            <span class="filter-label">Filtrar por:</span>
+            <select id="filter-modelo" class="filter-select">
+                <option value="">Todos los modelos</option>
+            </select>
+            <select id="filter-tipo" class="filter-select">
+                <option value="">Todos los tipos</option>
+            </select>
+            <select id="filter-terminal" class="filter-select">
+                <option value="">Todos los terminales</option>
+            </select>
+        </div>
+
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Buscar por número interno o patente...">
+            <button id="search-button"><i class="fas fa-search"></i></button>
+        </div>
+
+        <div class="tabs">
+            <div class="tab active" data-tab="pendientes">Buses Pendientes</div>
+            <div class="tab" data-tab="cargados">Buses con Carga</div>
+            <div class="tab" data-tab="graficos">Gráficos</div>
+        </div>
+
+        <div class="tab-content active" id="pendientes-tab">
+            <h2>Buses Pendientes de Carga</h2>
+
+            <div class="pagination-options">
+                <div class="rows-per-page">
+                    <label for="pendientes-per-page">Filas por página:</label>
+                    <select id="pendientes-per-page">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
+                <button id="show-all-pendientes" class="show-all-btn">Mostrar todos</button>
+            </div>
+
+            <div class="table-container" id="pendientes-table-container">
+                <table id="buses-pendientes-table">
+                    <thead>
+                        <tr>
+                            <th>N° Interno</th>
+                            <th>Patente</th>
+                            <th>Modelo</th>
+                            <th>Tipo</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="buses-pendientes-body">
+                        <tr>
+                            <td colspan="5" class="text-center">No hay datos disponibles. Por favor, suba un archivo de
+                                carga.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination" id="pendientes-pagination">
+                <!-- Paginación generada dinámicamente -->
+            </div>
+        </div>
+
+        <div class="tab-content" id="cargados-tab">
+            <h2>Buses con Carga Completada</h2>
+
+            <div class="pagination-options">
+                <div class="rows-per-page">
+                    <label for="cargados-per-page">Filas por página:</label>
+                    <select id="cargados-per-page">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
+                <button id="show-all-cargados" class="show-all-btn">Mostrar todos</button>
+            </div>
+
+            <div class="table-container" id="cargados-table-container">
+                <table id="buses-cargados-table">
+                    <thead>
+                        <tr>
+                            <th>N° Interno</th>
+                            <th>Patente</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Litros</th>
+                            <th>Terminal</th>
+                            <th>Modelo</th>
+                        </tr>
+                    </thead>
+                    <tbody id="buses-cargados-body">
+                        <tr>
+                            <td colspan="7" class="text-center">No hay datos disponibles. Por favor, suba un archivo de
+                                carga.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination" id="cargados-pagination">
+                <!-- Paginación generada dinámicamente -->
+            </div>
+        </div>
+
+        <div class="tab-content" id="graficos-tab">
+            <h2>Análisis Gráfico</h2>
+
+            <div class="chart-container">
+                <h3 class="chart-title">Distribución de Cargas por Modelo</h3>
+                <canvas id="model-chart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h3 class="chart-title">Distribución de Cargas por Tipo</h3>
+                <canvas id="type-chart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h3 class="chart-title">Promedio de Litros por Modelo</h3>
+                <canvas id="liters-chart"></canvas>
+            </div>
+        </div>
+
+        <div class="loader" id="loader"></div>
+
+        <div class="footer">
+            <p>Sistema de Análisis de Carga de Combustible | Lo Echevers &copy; 2025</p>
+        </div>
+    </div>
+
+    <script>
+        // Variables para almacenar los datos
+        let busesCargados = [];
+        let busesSinCarga = [];
+        let flotaCompleta = [];
+
+        // Variables para la flota
+        const datosFlota = [
+            { numInterno: 1887, patente: "LXWP65", modelo: "SCANIA", tipo: "ARTICULADO" },
+            { numInterno: 1908, patente: "PFVG93", modelo: "SCANIA", tipo: "ARTICULADO" },
+            { numInterno: 1747, patente: "PFYC59", modelo: "SCANIA", tipo: "ARTICULADO" },
+            { numInterno: 1750, patente: "PFYC62", modelo: "SCANIA", tipo: "ARTICULADO" },
+            { numInterno: 1751, patente: "PFYC63", modelo: "SCANIA", tipo: "ARTICULADO" },
+            { numInterno: 1760, patente: "PFYC82", modelo: "SCANIA", tipo: "ARTICULADO" },
+            { numInterno: 1763, patente: "PFZK85", modelo: "SCANIA", tipo: "ARTICULADO" },
+            { numInterno: 1764, patente: "PFZK87", modelo: "SCANIA", tipo: "ARTICULADO" },
+            { numInterno: 1765, patente: "PFZK88", modelo: "SCANIA", tipo: "ARTICULADO" },
+            { numInterno: 1766, patente: "PGBF42", modelo: "SCANIA", tipo: "ARTICULADO" },
+            { numInterno: 1767, patente: "PGBY47", modelo: "SCANIA", tipo: "ARTICULADO" },
+            { numInterno: 1768, patente: "PGBY52", modelo: "SCANIA", tipo: "ARTICULADO" },
+            { numInterno: 1769, patente: "PGBY55", modelo: "SCANIA", tipo: "ARTICULADO" },
+            { numInterno: 1770, patente: "PGBY56", modelo: "SCANIA", tipo: "ARTICULADO" },
+            { numInterno: 1771, patente: "PGBY61", modelo: "SCANIA", tipo: "ARTICULADO" },
+            { numInterno: 1772, patente: "PGBY74", modelo: "SCANIA", tipo: "ARTICULADO" },
+            { numInterno: 1773, patente: "PGBY82", modelo: "SCANIA", tipo: "ARTICULADO" },
+            { numInterno: 1775, patente: "PGBY84", modelo: "SCANIA", tipo: "ARTICULADO" },
+            { numInterno: 1776, patente: "PGBY85", modelo: "SCANIA", tipo: "ARTICULADO" },
+            { numInterno: 1777, patente: "PGBY90", modelo: "SCANIA", tipo: "ARTICULADO" },
+            { numInterno: 1778, patente: "PGBY91", modelo: "SCANIA", tipo: "ARTICULADO" },
+            { numInterno: 1779, patente: "PGBY92", modelo: "SCANIA", tipo: "ARTICULADO" },
+            { numInterno: 1780, patente: "PGBZ15", modelo: "SCANIA", tipo: "ARTICULADO" },
+            { numInterno: 1783, patente: "PGLD59", modelo: "SCANIA", tipo: "ARTICULADO" },
+            { numInterno: 1784, patente: "PGLD60", modelo: "SCANIA", tipo: "ARTICULADO" },
+            { numInterno: 1785, patente: "PGLD62", modelo: "SCANIA", tipo: "ARTICULADO" },
+            { numInterno: 1786, patente: "PGLD63", modelo: "SCANIA", tipo: "ARTICULADO" },
+            { numInterno: 1787, patente: "PGLD68", modelo: "SCANIA", tipo: "ARTICULADO" },
+            { numInterno: 1788, patente: "PGLD72", modelo: "SCANIA", tipo: "ARTICULADO" },
+            { numInterno: 1789, patente: "PGLD82", modelo: "SCANIA", tipo: "ARTICULADO" },
+            { numInterno: 1790, patente: "PGTV13", modelo: "SCANIA", tipo: "ARTICULADO" },
+            { numInterno: 893, patente: "SGPY89", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1503, patente: "SHCV70", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 909, patente: "SHCV76", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 913, patente: "SHCV80", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 917, patente: "SHCV84", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 918, patente: "SHCV85", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 919, patente: "SHCX36", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 920, patente: "SHCX37", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 921, patente: "SHCX38", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 925, patente: "SHCX56", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 926, patente: "SHCX57", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 927, patente: "SHCX59", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 928, patente: "SHCX62", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 929, patente: "SHCX63", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 933, patente: "SHCY14", modelo: "VOLVO", tipo: "ARTICULADO" },
+            { numInterno: 935, patente: "SHCY21", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 938, patente: "SHCY24", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 939, patente: "SHCY25", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 940, patente: "SHCY26", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 943, patente: "SHCY29", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 946, patente: "SHCY52", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 947, patente: "SHCY53", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 948, patente: "SHCY54", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 949, patente: "SHCY99", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1445, patente: "SHXD58", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1446, patente: "SHXD59", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1447, patente: "SHXD60", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1448, patente: "SHXD68", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1449, patente: "SHXD69", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1450, patente: "SHXD70", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1451, patente: "SHXD71", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1452, patente: "SHXD72", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1453, patente: "SHXD73", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1473, patente: "SHXG33", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1474, patente: "SHXG35", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1477, patente: "SHXG39", modelo: "VOLVO", tipo: "ARTICULADO" },
+            { numInterno: 1478, patente: "SHXG41", modelo: "VOLVO", tipo: "ARTICULADO" },
+            { numInterno: 1479, patente: "SHXG43", modelo: "VOLVO", tipo: "ARTICULADO" },
+            { numInterno: 1480, patente: "SHXG44", modelo: "VOLVO", tipo: "ARTICULADO" },
+            { numInterno: 1481, patente: "SJPC17", modelo: "VOLVO", tipo: "ARTICULADO" },
+            { numInterno: 1482, patente: "SJPC22", modelo: "VOLVO", tipo: "ARTICULADO" },
+            { numInterno: 1483, patente: "SJPC23", modelo: "VOLVO", tipo: "ARTICULADO" },
+            { numInterno: 1484, patente: "SJPC24", modelo: "VOLVO", tipo: "ARTICULADO" },
+            { numInterno: 1485, patente: "SJPC25", modelo: "VOLVO", tipo: "ARTICULADO" },
+            { numInterno: 1486, patente: "SJPC28", modelo: "VOLVO", tipo: "ARTICULADO" },
+            { numInterno: 1805, patente: "SJPC29", modelo: "VOLVO", tipo: "ARTICULADO" },
+            { numInterno: 1635, patente: "SJPC72", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1651, patente: "SJPD55", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1652, patente: "SJPD56", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1653, patente: "SJPD58", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1654, patente: "SJPD70", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1657, patente: "SJPD75", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1487, patente: "SJPD76", modelo: "VOLVO", tipo: "ARTICULADO" },
+            { numInterno: 1488, patente: "SJPD77", modelo: "VOLVO", tipo: "ARTICULADO" },
+            { numInterno: 1489, patente: "SJPD78", modelo: "VOLVO", tipo: "ARTICULADO" },
+            { numInterno: 1658, patente: "SJPD79", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1659, patente: "SJPD80", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1660, patente: "SJPD81", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1661, patente: "SJPD82", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1662, patente: "SJPD84", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1490, patente: "SJPD85", modelo: "VOLVO", tipo: "ARTICULADO" },
+            { numInterno: 1664, patente: "SJPF40", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1669, patente: "SJPF83", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1670, patente: "SJPF84", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1671, patente: "SJPF85", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1672, patente: "SJPF91", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1673, patente: "SJPF92", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1674, patente: "SJPF93", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1675, patente: "SJPF94", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1676, patente: "SJPF95", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1677, patente: "SJPF96", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1678, patente: "SJPF97", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1679, patente: "SJPF98", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1680, patente: "SJPF99", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1681, patente: "SKPH68", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1491, patente: "SKPH69", modelo: "VOLVO", tipo: "ARTICULADO" },
+            { numInterno: 1683, patente: "SKPH72", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1685, patente: "SKPH74", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1686, patente: "SKPH75", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1687, patente: "SKPH77", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1492, patente: "SKPH79", modelo: "VOLVO", tipo: "ARTICULADO" },
+            { numInterno: 1689, patente: "SKPH81", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1690, patente: "SKPH82", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1691, patente: "SKPH83", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1692, patente: "SKPJ43", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1493, patente: "SKPJ45", modelo: "VOLVO", tipo: "ARTICULADO" },
+            { numInterno: 1494, patente: "SKPJ46", modelo: "VOLVO", tipo: "ARTICULADO" },
+            { numInterno: 1495, patente: "SKPJ48", modelo: "VOLVO", tipo: "ARTICULADO" },
+            { numInterno: 1496, patente: "SKPJ49", modelo: "VOLVO", tipo: "ARTICULADO" },
+            { numInterno: 1497, patente: "SKPJ53", modelo: "VOLVO", tipo: "ARTICULADO" },
+            { numInterno: 1498, patente: "SKPJ54", modelo: "VOLVO", tipo: "ARTICULADO" },
+            { numInterno: 1499, patente: "SKPK17", modelo: "VOLVO", tipo: "ARTICULADO" },
+            { numInterno: 1836, patente: "SKPK33", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1842, patente: "SKPK41", modelo: "VOLVO", tipo: "RIGIDO" },
+            { numInterno: 1500, patente: "SKPK59", modelo: "VOLVO", tipo: "ARTICULADO" },
+            { numInterno: 1501, patente: "SKPK60", modelo: "VOLVO", tipo: "ARTICULADO" },
+            { numInterno: 1507, patente: "SLGS86", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1508, patente: "SLGS87", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1509, patente: "SLGS89", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1510, patente: "SLGS90", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1511, patente: "SLGS92", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1512, patente: "SLGS94", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1513, patente: "SLGS95", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1514, patente: "SLGS96", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1515, patente: "SLGS98", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1516, patente: "SLGS99", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1517, patente: "SLGT10", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1518, patente: "SLGT13", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1519, patente: "SLGT27", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1520, patente: "SLGT29", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1521, patente: "SLGT31", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1522, patente: "SLGT32", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1523, patente: "SLGT34", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1524, patente: "SLGT36", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1525, patente: "SLGT37", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1526, patente: "SLGT38", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1527, patente: "SLLY52", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1528, patente: "SLLY78", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1529, patente: "SLLY81", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1530, patente: "SLLY86", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1531, patente: "SLLY91", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1532, patente: "SLLY99", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1533, patente: "SLLZ26", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1534, patente: "SLLZ29", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1535, patente: "SLLZ31", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1536, patente: "SLLZ36", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1537, patente: "SLLZ38", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1538, patente: "SLLZ39", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1539, patente: "SLLZ40", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1540, patente: "SLLZ43", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1541, patente: "SLLZ46", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1542, patente: "SLLZ47", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1543, patente: "SLLZ51", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1544, patente: "SLLZ56", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1545, patente: "SLLZ63", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1546, patente: "SLLZ77", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1547, patente: "SLLZ93", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1548, patente: "SLLZ98", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1549, patente: "SLPB18", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1550, patente: "SLPB29", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1551, patente: "SLPB36", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1552, patente: "SLPB44", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1553, patente: "SLPB45", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1554, patente: "SLPB47", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1555, patente: "SLPB49", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1556, patente: "SLPB53", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1557, patente: "SLPB64", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1558, patente: "SLPB66", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1559, patente: "SLPB69", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1560, patente: "SLPB71", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1561, patente: "SLPB73", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1562, patente: "SLPB83", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1563, patente: "SLPB84", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1564, patente: "SLPB86", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1565, patente: "SLPB87", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1566, patente: "SLPB92", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1567, patente: "SLPB94", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1568, patente: "SLPB98", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1569, patente: "SLPC10", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1570, patente: "SLPC11", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1571, patente: "SLPC12", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1572, patente: "SLPC14", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1573, patente: "SLPC18", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1574, patente: "SLPC22", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1575, patente: "SLPC24", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1576, patente: "SLPC25", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1577, patente: "SLPC26", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1578, patente: "SLPC27", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1579, patente: "SLPC29", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1580, patente: "SLPC30", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1581, patente: "SLPC32", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1582, patente: "SLPC36", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1583, patente: "SLPC38", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1584, patente: "SLPC40", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1585, patente: "SLPC41", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1586, patente: "SLPC43", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1587, patente: "SLPC48", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1588, patente: "SLPC49", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1589, patente: "SLPC50", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1590, patente: "SLPC51", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1591, patente: "SLPC52", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1592, patente: "SLPC54", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 1593, patente: "SLPC58", modelo: "FOTON", tipo: "ELECTRICO" },
+            { numInterno: 2070, patente: "FLXT77", modelo: "LO 916", tipo: "LIEBRE" },
+            { numInterno: 2071, patente: "FLXT78", modelo: "LO 916", tipo: "LIEBRE" },
+            { numInterno: 2072, patente: "FLXT79", modelo: "LO 916", tipo: "LIEBRE" },
+            { numInterno: 2073, patente: "FLXT80", modelo: "LO 916", tipo: "LIEBRE" },
+            { numInterno: 2074, patente: "FLXT81", modelo: "LO 916", tipo: "LIEBRE" },
+            { numInterno: 2075, patente: "FLXT82", modelo: "LO 916", tipo: "LIEBRE" },
+            { numInterno: 2076, patente: "FLXT83", modelo: "LO 916", tipo: "LIEBRE" },
+            { numInterno: 2077, patente: "FLXT84", modelo: "LO 916", tipo: "LIEBRE" }
+        ];
+
+        // Variables para la paginación
+        let pendientesItemsPerPage = 10;
+        let cargadosItemsPerPage = 10;
+        let currentPendientesPage = 1;
+        let currentCargadosPage = 1;
+        let showAllPendientes = false;
+        let showAllCargados = false;
+
+        // Arrays filtrados para búsquedas
+        let filteredBusesSinCarga = [];
+        let filteredBusesCargados = [];
+
+        // Variables para los gráficos
+        let hourlyChart = null;
+        let modelChart = null;
+        let typeChart = null;
+        let litersChart = null;
+
+        // Inicializar la flota completa
+        function inicializarFlota() {
+            flotaCompleta = [...datosFlota];
+            busesSinCarga = [...flotaCompleta];  // Inicialmente, todos los buses están sin carga
+            filteredBusesSinCarga = [...busesSinCarga];
+            updateDashboard();
+        }
+
+        // Función para procesar el archivo de carga
+        function procesarArchivoCarga(archivo) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                const data = new Uint8Array(e.target.result);
+                try {
+                    // Procesar el archivo Excel
+                    const workbook = XLSX.read(data, { cellDates: true });
+
+                    // Obtener la primera hoja
+                    const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+
+                    // Convertir a JSON (fila 3 contiene los encabezados)
+                    const jsonData = XLSX.utils.sheet_to_json(firstSheet, { range: 2 });
+
+                    // Procesar los datos
+                    procesarDatosCarga(jsonData);
+
+                    // Mostrar mensaje de éxito
+                    alert('Archivo procesado correctamente');
+                } catch (error) {
+                    console.error('Error al procesar el archivo:', error);
+                    alert('Error al procesar el archivo. Verifica que sea un archivo Excel válido.');
+                }
+            };
+
+            reader.readAsArrayBuffer(archivo);
+        }
+
+        // Función para procesar los datos de carga
+        function procesarDatosCarga(datos) {
+            // Limpiar datos previos
+            busesCargados = [];
+
+            // Procesar cada registro
+            datos.forEach(item => {
+                if (item['Número interno'] && item['Patente']) {
+                    const fecha = item['Fecha'] ? new Date(item['Fecha']) : new Date();
+                    const hora = item['Hora'] ? new Date(item['Hora']) : new Date();
+
+                    busesCargados.push({
+                        numInterno: item['Número interno'],
+                        patente: item['Patente'],
+                        fecha: fecha.toLocaleDateString('es-CL'),
+                        hora: hora.toLocaleTimeString('es-CL'),
+                        litros: item['Cantidad litros'] || 0,
+                        terminal: item['Terminal'] || 'N/A',
+                        tipo: item['Tipo'] || 'N/A',
+                        modelo: item['Modelo chasis'] || 'N/A'
+                    });
+                }
+            });
+
+            console.log("Procesados", busesCargados.length, "registros de carga");
+
+            // Actualizar buses sin carga
+            actualizarBusesSinCarga();
+
+            // Actualizar filtros
+            actualizarFiltros();
+
+            // Actualizar gráficos
+            actualizarGraficos();
+
+            // Actualizar dashboard
+            filteredBusesCargados = [...busesCargados];
+            updateDashboard();
+        }
+
+        // Función para actualizar los buses sin carga
+        function actualizarBusesSinCarga() {
+            // Obtener los números internos de los buses con carga
+            const busesConCarga = new Set(busesCargados.map(bus => bus.numInterno));
+            console.log("Buses con carga:", busesConCarga.size);
+
+            // Filtrar la flota para obtener los buses sin carga
+            busesSinCarga = flotaCompleta.filter(bus => !busesConCarga.has(bus.numInterno));
+            filteredBusesSinCarga = [...busesSinCarga];
+            
+            console.log("Buses sin carga:", busesSinCarga.length);
+        }
+
+        // Función para actualizar los filtros selectores
+        function actualizarFiltros() {
+            // Obtener modelos únicos
+            const modelos = new Set();
+            flotaCompleta.forEach(bus => modelos.add(bus.modelo));
+            busesCargados.forEach(bus => modelos.add(bus.modelo));
+
+            // Obtener tipos únicos
+            const tipos = new Set();
+            flotaCompleta.forEach(bus => tipos.add(bus.tipo));
+            busesCargados.forEach(bus => tipos.add(bus.tipo));
+
+            // Obtener terminales únicos
+            const terminales = new Set();
+            busesCargados.forEach(bus => terminales.add(bus.terminal));
+
+            // Actualizar selector de modelos
+            const modeloSelector = document.getElementById('filter-modelo');
+            modeloSelector.innerHTML = '<option value="">Todos los modelos</option>';
+            modelos.forEach(modelo => {
+                if (modelo) {
+                    const option = document.createElement('option');
+                    option.value = modelo;
+                    option.textContent = modelo;
+                    modeloSelector.appendChild(option);
+                }
+            });
+
+            // Actualizar selector de tipos
+            const tipoSelector = document.getElementById('filter-tipo');
+            tipoSelector.innerHTML = '<option value="">Todos los tipos</option>';
+            tipos.forEach(tipo => {
+                if (tipo) {
+                    const option = document.createElement('option');
+                    option.value = tipo;
+                    option.textContent = tipo;
+                    tipoSelector.appendChild(option);
+                }
+            });
+
+            // Actualizar selector de terminales
+            const terminalSelector = document.getElementById('filter-terminal');
+            terminalSelector.innerHTML = '<option value="">Todos los terminales</option>';
+            terminales.forEach(terminal => {
+                if (terminal) {
+                    const option = document.createElement('option');
+                    option.value = terminal;
+                    option.textContent = terminal;
+                    terminalSelector.appendChild(option);
+                }
+            });
+        }
+
+        // Función para actualizar los gráficos
+        function actualizarGraficos() {
+            actualizarGraficoHorario();
+            actualizarGraficoModelo();
+            actualizarGraficoTipo();
+            actualizarGraficoLitros();
+        }
+
+        // Función para actualizar el gráfico horario
+        function actualizarGraficoHorario() {
+            // Agrupar por hora
+            const horasCarga = {};
+            busesCargados.forEach(bus => {
+                const horaCompleta = bus.hora;
+                const hora = horaCompleta.split(':')[0]; // Obtener solo la hora
+                horasCarga[hora] = (horasCarga[hora] || 0) + 1;
+            });
+
+            // Ordenar las horas
+            const horas = Object.keys(horasCarga).sort((a, b) => parseInt(a) - parseInt(b));
+            const cantidades = horas.map(hora => horasCarga[hora]);
+
+            // Formatear las horas para mejor visualización
+            const horasFormateadas = horas.map(hora => `${hora}:00 hrs`);
+
+            // Crear o actualizar el gráfico
+            const ctx = document.getElementById('hourly-chart').getContext('2d');
+
+            if (hourlyChart) {
+                hourlyChart.data.labels = horasFormateadas;
+                hourlyChart.data.datasets[0].data = cantidades;
+                hourlyChart.update();
+            } else {
+                hourlyChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: horasFormateadas,
+                        datasets: [{
+                            label: 'Cantidad de buses cargados',
+                            data: cantidades,
+                            backgroundColor: 'rgba(75, 134, 180, 0.7)', // Azul
+                            borderColor: 'rgba(75, 134, 180, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'top'
+                            },
+                            title: {
+                                display: true,
+                                text: 'Distribución de cargas por hora del día'
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'Cantidad de buses'
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Hora del día'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        // Función para actualizar el gráfico por modelo
+        function actualizarGraficoModelo() {
+            // Agrupar por modelo
+            const modelosCarga = {};
+            busesCargados.forEach(bus => {
+                const modelo = bus.modelo || 'No especificado';
+                modelosCarga[modelo] = (modelosCarga[modelo] || 0) + 1;
+            });
+
+            // Preparar datos para el gráfico
+            const modelos = Object.keys(modelosCarga);
+            const cantidades = modelos.map(modelo => modelosCarga[modelo]);
+
+            // Colores para el gráfico de torta
+            const colores = [
+                'rgba(75, 134, 180, 0.7)',   // Azul
+                'rgba(255, 99, 132, 0.7)',   // Rosa
+                'rgba(255, 205, 86, 0.7)',   // Amarillo
+                'rgba(54, 162, 235, 0.7)',   // Azul claro
+                'rgba(153, 102, 255, 0.7)',  // Púrpura
+                'rgba(255, 159, 64, 0.7)'    // Naranja
+            ];
+
+            // Crear o actualizar el gráfico
+            const ctx = document.getElementById('model-chart').getContext('2d');
+
+            if (modelChart) {
+                modelChart.data.labels = modelos;
+                modelChart.data.datasets[0].data = cantidades;
+                modelChart.update();
+            } else {
+                modelChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: modelos,
+                        datasets: [{
+                            data: cantidades,
+                            backgroundColor: colores,
+                            borderColor: colores.map(color => color.replace('0.7', '1')),
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                labels: {
+                                    boxWidth: 12,
+                                    font: {
+                                        size: 10
+                                    }
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Distribución por Modelo',
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        // Función para actualizar el gráfico por tipo
+        function actualizarGraficoTipo() {
+            // Agrupar por tipo
+            const tiposCarga = {};
+            busesCargados.forEach(bus => {
+                const tipo = bus.tipo || 'No especificado';
+                tiposCarga[tipo] = (tiposCarga[tipo] || 0) + 1;
+            });
+
+            // Preparar datos para el gráfico
+            const tipos = Object.keys(tiposCarga);
+            const cantidades = tipos.map(tipo => tiposCarga[tipo]);
+
+            // Colores para el gráfico de dona
+            const colores = [
+                'rgba(75, 134, 180, 0.7)',   // Azul
+                'rgba(255, 99, 132, 0.7)',   // Rosa
+                'rgba(255, 205, 86, 0.7)',   // Amarillo
+                'rgba(54, 162, 235, 0.7)'    // Azul claro
+            ];
+
+            // Crear o actualizar el gráfico
+            const ctx = document.getElementById('type-chart').getContext('2d');
+
+            if (typeChart) {
+                typeChart.data.labels = tipos;
+                typeChart.data.datasets[0].data = cantidades;
+                typeChart.update();
+            } else {
+                typeChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: tipos,
+                        datasets: [{
+                            data: cantidades,
+                            backgroundColor: colores,
+                            borderColor: colores.map(color => color.replace('0.7', '1')),
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                labels: {
+                                    boxWidth: 12,
+                                    font: {
+                                        size: 10
+                                    }
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Distribución por Tipo',
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        // Función para actualizar el gráfico de promedio de litros por modelo
+        function actualizarGraficoLitros() {
+            // Agrupar por modelo
+            const litrosPorModelo = {};
+            const conteoModelos = {};
+
+            busesCargados.forEach(bus => {
+                const modelo = bus.modelo || 'No especificado';
+                if (!litrosPorModelo[modelo]) {
+                    litrosPorModelo[modelo] = 0;
+                    conteoModelos[modelo] = 0;
+                }
+                litrosPorModelo[modelo] += parseInt(bus.litros) || 0;
+                conteoModelos[modelo]++;
+            });
+
+            // Calcular promedios
+            const modelos = Object.keys(litrosPorModelo);
+            const promedios = modelos.map(modelo => Math.round(litrosPorModelo[modelo] / conteoModelos[modelo]));
+
+            // Crear o actualizar el gráfico
+            const ctx = document.getElementById('liters-chart').getContext('2d');
+
+            if (litersChart) {
+                litersChart.data.labels = modelos;
+                litersChart.data.datasets[0].data = promedios;
+                litersChart.update();
+            } else {
+                litersChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: modelos,
+                        datasets: [{
+                            label: 'Promedio de litros',
+                            data: promedios,
+                            backgroundColor: 'rgba(75, 192, 192, 0.7)', // Verde-azulado
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'top',
+                                labels: {
+                                    boxWidth: 12,
+                                    font: {
+                                        size: 10
+                                    }
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Promedio de Litros por Modelo',
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'Litros promedio'
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Modelo'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        // Función para aplicar filtros
+        function aplicarFiltros() {
+            const modelo = document.getElementById('filter-modelo').value;
+            const tipo = document.getElementById('filter-tipo').value;
+            const terminal = document.getElementById('filter-terminal').value;
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+
+            // Filtrar buses sin carga
+            filteredBusesSinCarga = busesSinCarga.filter(bus => {
+                const coincideModelo = !modelo || bus.modelo === modelo;
+                const coincideTipo = !tipo || bus.tipo === tipo;
+                const coincideTermino = !searchTerm ||
+                    bus.numInterno.toString().includes(searchTerm) ||
+                    bus.patente.toLowerCase().includes(searchTerm);
+
+                return coincideModelo && coincideTipo && coincideTermino;
+            });
+
+            // Filtrar buses con carga
+            filteredBusesCargados = busesCargados.filter(bus => {
+                const coincideModelo = !modelo || bus.modelo === modelo;
+                const coincideTipo = !tipo || bus.tipo === tipo;
+                const coincideTerminal = !terminal || bus.terminal === terminal;
+                const coincideTermino = !searchTerm ||
+                    bus.numInterno.toString().includes(searchTerm) ||
+                    bus.patente.toLowerCase().includes(searchTerm);
+
+                return coincideModelo && coincideTipo && coincideTerminal && coincideTermino;
+            });
+
+            // Resetear paginación
+            currentPendientesPage = 1;
+            currentCargadosPage = 1;
+
+            // Actualizar tablas
+            updatePendientesTable();
+            updateCargadosTable();
+        }
+
+        // Función para actualizar el dashboard con los datos
+        function updateDashboard() {
+            const totalBuses = flotaCompleta.length;
+            const porcentajeCargados = Math.round((busesCargados.length / totalBuses) * 100) || 0;
+            const porcentajePendientes = 100 - porcentajeCargados;
+
+            // Calcular promedio de litros
+            let promedioLitros = 0;
+            if (busesCargados.length > 0) {
+                const totalLitros = busesCargados.reduce((sum, bus) => sum + (parseInt(bus.litros) || 0), 0);
+                promedioLitros = Math.round(totalLitros / busesCargados.length);
+            }
+
+            // Actualizar las tarjetas de resumen
+            document.getElementById('total-buses').textContent = totalBuses;
+            document.getElementById('buses-con-carga').textContent = busesCargados.length;
+            document.getElementById('buses-sin-carga').textContent = busesSinCarga.length;
+            document.getElementById('porcentaje-cargados').textContent = `${porcentajeCargados}%`;
+            document.getElementById('porcentaje-pendientes').textContent = `${porcentajePendientes}%`;
+            document.getElementById('promedio-litros').textContent = `${promedioLitros} L`;
+
+            // Actualizar fecha y hora
+            document.getElementById('current-date').textContent = formatCurrentDate();
+            document.getElementById('last-update-time').textContent = formatCurrentTime();
+
+            // Actualizar las tablas
+            updatePendientesTable();
+            updateCargadosTable();
+        }
+
+        // Función para actualizar la tabla de buses pendientes
+        function updatePendientesTable() {
+            const table = document.getElementById('buses-pendientes-body');
+            table.innerHTML = '';
+
+            if (filteredBusesSinCarga.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = '<td colspan="5" class="text-center">No hay buses pendientes de carga o no se ha subido un archivo de carga.</td>';
+                table.appendChild(row);
+                document.getElementById('pendientes-pagination').innerHTML = '';
+                return;
+            }
+
+            const effectiveItemsPerPage = showAllPendientes ? filteredBusesSinCarga.length : pendientesItemsPerPage;
+            const startIndex = (currentPendientesPage - 1) * effectiveItemsPerPage;
+            const endIndex = Math.min(startIndex + effectiveItemsPerPage, filteredBusesSinCarga.length);
+
+            for (let i = startIndex; i < endIndex; i++) {
+                const bus = filteredBusesSinCarga[i];
+                const row = document.createElement('tr');
+
+                row.innerHTML = `
+                    <td class="cell-highlight">${bus.numInterno}</td>
+                    <td>${bus.patente}</td>
+                    <td>${bus.modelo}</td>
+                    <td>${bus.tipo}</td>
+                    <td><span class="badge badge-warning">Pendiente</span></td>
+                `;
+
+                table.appendChild(row);
+            }
+
+            // Actualizar paginación solo si no se está mostrando todo
+            if (!showAllPendientes) {
+                updatePagination('pendientes-pagination', filteredBusesSinCarga.length, currentPendientesPage, pendientesItemsPerPage, updatePendientesPage);
+            } else {
+                document.getElementById('pendientes-pagination').innerHTML = '';
+            }
+        }
+
+        // Función para actualizar la tabla de buses cargados
+        function updateCargadosTable() {
+            const table = document.getElementById('buses-cargados-body');
+            table.innerHTML = '';
+
+            if (filteredBusesCargados.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = '<td colspan="7" class="text-center">No hay buses con carga o no se ha subido un archivo de carga.</td>';
+                table.appendChild(row);
+                document.getElementById('cargados-pagination').innerHTML = '';
+                return;
+            }
+
+            const effectiveItemsPerPage = showAllCargados ? filteredBusesCargados.length : cargadosItemsPerPage;
+            const startIndex = (currentCargadosPage - 1) * effectiveItemsPerPage;
+            const endIndex = Math.min(startIndex + effectiveItemsPerPage, filteredBusesCargados.length);
+
+            for (let i = startIndex; i < endIndex; i++) {
+                const bus = filteredBusesCargados[i];
+                const row = document.createElement('tr');
+
+                row.innerHTML = `
+                    <td class="cell-highlight">${bus.numInterno}</td>
+                    <td>${bus.patente}</td>
+                    <td>${bus.fecha}</td>
+                    <td>${bus.hora}</td>
+                    <td>${bus.litros} L</td>
+                    <td>${bus.terminal}</td>
+                    <td>${bus.modelo}</td>
+                `;
+
+                table.appendChild(row);
+            }
+
+            // Actualizar paginación solo si no se está mostrando todo
+            if (!showAllCargados) {
+                updatePagination('cargados-pagination', filteredBusesCargados.length, currentCargadosPage, cargadosItemsPerPage, updateCargadosPage);
+            } else {
+                document.getElementById('cargados-pagination').innerHTML = '';
+            }
+        }
+
+        // Función para actualizar la paginación
+        function updatePagination(containerId, totalItems, currentPage, itemsPerPage, pageChangeFunction) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+            if (totalPages <= 1) {
+                return;
+            }
+
+            // Botón anterior
+            const prevButton = document.createElement('button');
+            prevButton.textContent = '«';
+            prevButton.disabled = currentPage === 1;
+            prevButton.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    pageChangeFunction(currentPage - 1);
+                }
+            });
+            container.appendChild(prevButton);
+
+            // Botones de página
+            const maxButtons = 5;
+            let startPage = Math.max(1, currentPage - Math.floor(maxButtons / 2));
+            let endPage = Math.min(totalPages, startPage + maxButtons - 1);
+
+            if (endPage - startPage + 1 < maxButtons) {
+                startPage = Math.max(1, endPage - maxButtons + 1);
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                const pageButton = document.createElement('button');
+                pageButton.textContent = i;
+                pageButton.classList.toggle('active', i === currentPage);
+                pageButton.addEventListener('click', () => pageChangeFunction(i));
+                container.appendChild(pageButton);
+            }
+
+            // Botón siguiente
+            const nextButton = document.createElement('button');
+            nextButton.textContent = '»';
+            nextButton.disabled = currentPage === totalPages;
+            nextButton.addEventListener('click', () => {
+                if (currentPage < totalPages) {
+                    pageChangeFunction(currentPage + 1);
+                }
+            });
+            container.appendChild(nextButton);
+        }
+
+        // Funciones para cambiar de página
+        function updatePendientesPage(page) {
+            currentPendientesPage = page;
+            updatePendientesTable();
+        }
+
+        function updateCargadosPage(page) {
+            currentCargadosPage = page;
+            updateCargadosTable();
+        }
+
+        // Función para formatear la fecha actual
+        function formatCurrentDate() {
+            const now = new Date();
+            const options = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            };
+            return now.toLocaleDateString('es-CL', options);
+        }
+
+        // Función para formatear la hora actual
+        function formatCurrentTime() {
+            const now = new Date();
+            return now.toLocaleTimeString('es-CL');
+        }
+
+        // Función para exportar a Excel
+        function exportToExcel() {
+            // Crear un libro de trabajo
+            const wb = XLSX.utils.book_new();
+
+            // Crear hoja para buses pendientes
+            const pendientesData = [
+                ['N° Interno', 'Patente', 'Modelo', 'Tipo', 'Estado']
+            ];
+
+            filteredBusesSinCarga.forEach(bus => {
+                pendientesData.push([
+                    bus.numInterno,
+                    bus.patente,
+                    bus.modelo,
+                    bus.tipo,
+                    'Pendiente'
+                ]);
+            });
+
+            const pendientesSheet = XLSX.utils.aoa_to_sheet(pendientesData);
+            XLSX.utils.book_append_sheet(wb, pendientesSheet, 'Buses Pendientes');
+
+            // Crear hoja para buses cargados
+            const cargadosData = [
+                ['N° Interno', 'Patente', 'Fecha', 'Hora', 'Litros', 'Terminal', 'Modelo']
+            ];
+
+            filteredBusesCargados.forEach(bus => {
+                cargadosData.push([
+                    bus.numInterno,
+                    bus.patente,
+                    bus.fecha,
+                    bus.hora,
+                    bus.litros,
+                    bus.terminal,
+                    bus.modelo
+                ]);
+            });
+
+            const cargadosSheet = XLSX.utils.aoa_to_sheet(cargadosData);
+            XLSX.utils.book_append_sheet(wb, cargadosSheet, 'Buses Cargados');
+
+            // Crear hoja de resumen
+            const resumenData = [
+                ['Métrica', 'Valor'],
+                ['Total Buses', flotaCompleta.length],
+                ['Buses con Carga', busesCargados.length],
+                ['Buses Pendientes', busesSinCarga.length],
+                ['Porcentaje Cargados', `${Math.round((busesCargados.length / flotaCompleta.length) * 100)}%`],
+                ['Porcentaje Pendientes', `${Math.round((busesSinCarga.length / flotaCompleta.length) * 100)}%`],
+                ['Promedio de Litros', `${Math.round(busesCargados.reduce((sum, bus) => sum + parseInt(bus.litros || 0), 0) / busesCargados.length)} L`],
+                ['Fecha de Reporte', formatCurrentDate()],
+                ['Hora de Reporte', formatCurrentTime()]
+            ];
+
+            const resumenSheet = XLSX.utils.aoa_to_sheet(resumenData);
+            XLSX.utils.book_append_sheet(wb, resumenSheet, 'Resumen');
+
+            // Exportar el libro
+            XLSX.writeFile(wb, `Reporte_Combustible_LoEchevers_${new Date().toISOString().split('T')[0]}.xlsx`);
+        }
+
+        // Función para exportar a PDF
+        function exportToPDF() {
+            const { jsPDF } = window.jspdf;
+
+            // Determinar qué tabla exportar basado en la pestaña activa
+            const activeTab = document.querySelector('.tab.active').getAttribute('data-tab');
+            let tableContainer;
+            let title;
+
+            if (activeTab === 'pendientes') {
+                tableContainer = document.getElementById('pendientes-table-container');
+                title = 'Buses Pendientes de Carga';
+            } else if (activeTab === 'cargados') {
+                tableContainer = document.getElementById('cargados-table-container');
+                title = 'Buses con Carga Completada';
+            } else {
+                alert('Seleccione la pestaña de pendientes o cargados para exportar a PDF');
+                return;
+            }
+
+            // Crear copia de la tabla para exportación
+            const exportTable = tableContainer.cloneNode(true);
+            exportTable.style.width = '100%';
+
+            // Crear un contenedor temporal para la tabla a exportar
+            const tempDiv = document.createElement('div');
+            tempDiv.classList.add('printable-table');
+            tempDiv.style.width = '100%';
+            tempDiv.style.padding = '20px';
+            tempDiv.style.backgroundColor = 'white';
+
+            // Añadir título
+            const titleEl = document.createElement('h2');
+            titleEl.textContent = title;
+            titleEl.style.textAlign = 'center';
+            titleEl.style.marginBottom = '20px';
+            titleEl.style.color = '#4b86b4';
+            tempDiv.appendChild(titleEl);
+
+            // Añadir fecha
+            const dateEl = document.createElement('p');
+            dateEl.textContent = `Fecha: ${formatCurrentDate()} - ${formatCurrentTime()}`;
+            dateEl.style.textAlign = 'center';
+            dateEl.style.marginBottom = '20px';
+            tempDiv.appendChild(dateEl);
+
+            // Añadir la tabla
+            tempDiv.appendChild(exportTable);
+
+            // Añadir al documento temporalmente
+            document.body.appendChild(tempDiv);
+
+            // Generar PDF
+            html2canvas(tempDiv, {
+                scale: 2, // Mayor calidad
+                useCORS: true,
+                logging: false
+            }).then(canvas => {
+                // Eliminar el contenedor temporal
+                document.body.removeChild(tempDiv);
+
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = pdf.internal.pageSize.getHeight();
+                const imgWidth = canvas.width;
+                const imgHeight = canvas.height;
+                const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+                const imgX = (pdfWidth - imgWidth * ratio) / 2;
+                const imgY = 30;
+
+                // Añadir logo o encabezado
+                pdf.setFontSize(18);
+                pdf.setTextColor(75, 134, 180);
+                pdf.text('Sistema de Análisis de Combustible', pdfWidth / 2, 15, { align: 'center' });
+
+                pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
+                pdf.save(`${title}_${new Date().toISOString().split('T')[0]}.pdf`);
+            });
+        }
+
+        // Función para imprimir el reporte
+        function printReport() {
+            window.print();
+        }
+
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            // Inicializar la flota
+            inicializarFlota();
+            
+            // Configurar tabs
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabId = tab.getAttribute('data-tab');
+                    
+                    // Actualizar clases active
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    
+                    document.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    
+                    document.getElementById(`${tabId}-tab`).classList.add('active');
+                });
+            });
+            
+            // Configurar búsqueda
+            document.getElementById('search-button').addEventListener('click', aplicarFiltros);
+            document.getElementById('search-input').addEventListener('keyup', e => {
+                if (e.key === 'Enter') {
+                    aplicarFiltros();
+                }
+            });
+            
+            // Configurar filtros
+            document.getElementById('filter-modelo').addEventListener('change', aplicarFiltros);
+            document.getElementById('filter-tipo').addEventListener('change', aplicarFiltros);
+            document.getElementById('filter-terminal').addEventListener('change', aplicarFiltros);
+            
+            // Configurar opciones de paginación
+            document.getElementById('pendientes-per-page').addEventListener('change', (e) => {
+                pendientesItemsPerPage = parseInt(e.target.value);
+                currentPendientesPage = 1;
+                showAllPendientes = false;
+                document.getElementById('show-all-pendientes').classList.remove('active');
+                updatePendientesTable();
+            });
+            
+            document.getElementById('cargados-per-page').addEventListener('change', (e) => {
+                cargadosItemsPerPage = parseInt(e.target.value);
+                currentCargadosPage = 1;
+                showAllCargados = false;
+                document.getElementById('show-all-cargados').classList.remove('active');
+                updateCargadosTable();
+            });
+            
+            // Configurar botones "Mostrar todos"
+            document.getElementById('show-all-pendientes').addEventListener('click', () => {
+                showAllPendientes = !showAllPendientes;
+                document.getElementById('show-all-pendientes').classList.toggle('active', showAllPendientes);
+                currentPendientesPage = 1;
+                updatePendientesTable();
+            });
+            
+            document.getElementById('show-all-cargados').addEventListener('click', () => {
+                showAllCargados = !showAllCargados;
+                document.getElementById('show-all-cargados').classList.toggle('active', showAllCargados);
+                currentCargadosPage = 1;
+                updateCargadosTable();
+            });
+            
+            // Configurar carga de archivos - IMPORTANTE: Corregido para evitar errores
+            const fileInput = document.getElementById('file-input');
+            const fileUploadContainer = document.getElementById('file-upload-container');
+            const fileName = document.getElementById('file-name');
+            
+            if (fileInput && fileUploadContainer) {
+                fileInput.addEventListener('change', function(e) {
+                    if (this.files && this.files[0]) {
+                        const file = this.files[0];
+                        if (fileName) {
+                            fileName.textContent = file.name;
+                            fileName.style.display = 'block';
+                        }
+                        
+                        // Procesar el archivo
+                        procesarArchivoCarga(file);
+                    }
+                });
+                
+                // Configurar drag and drop
+                fileUploadContainer.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    this.classList.add('drag-over');
+                });
+                
+                fileUploadContainer.addEventListener('dragleave', function() {
+                    this.classList.remove('drag-over');
+                });
+                
+                fileUploadContainer.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    this.classList.remove('drag-over');
+                    
+                    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                        const file = e.dataTransfer.files[0];
+                        fileInput.files = e.dataTransfer.files;
+                        if (fileName) {
+                            fileName.textContent = file.name;
+                            fileName.style.display = 'block';
+                        }
+                        
+                        // Procesar el archivo
+                        procesarArchivoCarga(file);
+                    }
+                });
+            } else {
+                console.error('No se encontraron los elementos para la carga de archivos');
+            }
+            
+            // Configurar actualización de datos
+            const refreshButton = document.getElementById('refresh-data');
+            if (refreshButton) {
+                refreshButton.addEventListener('click', () => {
+                    const loader = document.getElementById('loader');
+                    if (loader) loader.style.display = 'block';
+                    
+                    // Simular una carga
+                    setTimeout(() => {
+                        actualizarBusesSinCarga();
+                        actualizarGraficos();
+                        updateDashboard();
+                        if (loader) loader.style.display = 'none';
+                    }, 800);
+                });
+            }
+            
+            // Configurar exportación a Excel
+            const excelButton = document.getElementById('download-excel');
+            if (excelButton) {
+                excelButton.addEventListener('click', exportToExcel);
+            }
+            
+            // Configurar exportación a PDF
+            const pdfButton = document.getElementById('download-pdf');
+            if (pdfButton) {
+                pdfButton.addEventListener('click', exportToPDF);
+            }
+            
+            // Configurar impresión
+            const printButton = document.getElementById('print-report');
+            if (printButton) {
+                printButton.addEventListener('click', printReport);
+            }
+            
+            // Inicializar los filtros
+            actualizarFiltros();
+            
+            // Inicializar la fecha y hora actual
+            document.getElementById('current-date').textContent = formatCurrentDate();
+            document.getElementById('last-update-time').textContent = formatCurrentTime();
+            
+            console.log('Aplicación inicializada correctamente');
+        });
+    </script>
+</body>
+</html>
