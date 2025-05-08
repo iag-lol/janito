@@ -119,32 +119,40 @@
         .header-actions button:hover {
             background-color: rgba(255, 255, 255, 0.3);
         }
-        
+
         /* Contenedor principal del header */
         #main-header {
-          position: relative;
-          overflow: hidden;    /* recorta lo que sobresalga */
-          padding: 1.5rem 1.5rem;   /* define altura según contenido */
-          color: white;
-          text-align: center;
+            position: relative;
+            overflow: hidden;
+            /* recorta lo que sobresalga */
+            padding: 1.5rem 1.5rem;
+            /* define altura según contenido */
+            color: white;
+            text-align: center;
         }
 
         /* Imagen de fondo centrada verticalmente, ancho completo */
         #main-header .header-bg {
-          position: absolute;
-          top: 50%;            /* punto medio vertical de la imagen */
-          left: 0;             /* ancla al borde izquierdo */
-          width: 100%;         /* cubre todo el ancho */
-          height: auto;        /* mantiene proporción */
-          transform: translateY(-50%); /* centra verticalmente */
-          z-index: 0;
-          filter: brightness(0.6);
+            position: absolute;
+            top: 50%;
+            /* punto medio vertical de la imagen */
+            left: 0;
+            /* ancla al borde izquierdo */
+            width: 100%;
+            /* cubre todo el ancho */
+            height: auto;
+            /* mantiene proporción */
+            transform: translateY(-50%);
+            /* centra verticalmente */
+            z-index: 0;
+            filter: brightness(0.6);
         }
 
         /* Área para subir archivos */
         .upload-section {
             display: flex;
-            justify-content: flex-end; /* Alinea a la derecha */
+            justify-content: flex-end;
+            /* Alinea a la derecha */
             margin-bottom: 20px;
         }
 
@@ -153,13 +161,17 @@
             background-color: var(--white);
             border: 2px dashed var(--primary-color);
             border-radius: var(--border-radius);
-            width: 350px;           /* Más ancho */
-            min-height: 250px;      /* Altura adecuada */
-            padding: 25px 20px;     /* Padding vertical más delgado */
+            width: 350px;
+            /* Más ancho */
+            min-height: 250px;
+            /* Altura adecuada */
+            padding: 25px 20px;
+            /* Padding vertical más delgado */
             text-align: center;
             transition: all 0.3s ease;
             box-shadow: var(--box-shadow);
-            margin-left: auto;      /* Alinea a la derecha */
+            margin-left: auto;
+            /* Alinea a la derecha */
             margin-right: 0;
         }
 
@@ -620,11 +632,11 @@
             .header-actions {
                 margin-top: 10px;
             }
-            
+
             .upload-section {
                 justify-content: center;
             }
-            
+
             .file-upload-container {
                 width: 100%;
                 margin: 0;
@@ -656,27 +668,28 @@
     <div class="container">
         <header id="main-header">
             <!-- Imagen de fondo -->
-          <img src="img/header-fondo.jpeg" alt="Fondo Header" class="header-bg">
+            <img src="img/header-fondo.jpeg" alt="Fondo Header" class="header-bg">
             <img src="/janito/img/header-fondo.jpeg" alt="Fondo Header" class="header-bg">
 
             <div class="header-content">
-              <div>
-                <h1>Carga de Combustible - Janito 🫰</h1>
-                <p>Flota Lo Echevers – <span id="current-date"></span></p>
-                <p class="last-update">Última actualización: <span id="last-update-time"></span></p>
-              </div>
-        <div class="upload-section">
-            <div class="file-upload-container" id="file-upload-container">
-                <p><i class="fas fa-file-upload"></i> Arrastra o selecciona un archivo de carga de combustible (.xlsx)</p>
-                <input type="file" id="file-input" class="file-input" accept=".xlsx, .xls">
-                <label for="file-input" class="file-label">Seleccionar archivo</label>
-                <div class="file-name" id="file-name"></div>
-            </div>
-        </div>
+                <div>
+                    <h1>Carga de Combustible - Janito 🫰</h1>
+                    <p>Flota Lo Echevers – <span id="current-date"></span></p>
+                    <p class="last-update">Última actualización: <span id="last-update-time"></span></p>
+                </div>
+                <div class="upload-section">
+                    <div class="file-upload-container" id="file-upload-container">
+                        <p><i class="fas fa-file-upload"></i> Arrastra o selecciona un archivo de carga de combustible
+                            (.xlsx)</p>
+                        <input type="file" id="file-input" class="file-input" accept=".xlsx, .xls">
+                        <label for="file-input" class="file-label">Seleccionar archivo</label>
+                        <div class="file-name" id="file-name"></div>
+                    </div>
+                </div>
             </div>
         </header>
 
-      
+
 
         <div class="summary-cards">
             <div class="card">
@@ -893,41 +906,7 @@
             { numInterno: 1788, patente: "PGLD72", modelo: "SCANIA", tipo: "ARTICULADO" },
             { numInterno: 1789, patente: "PGLD82", modelo: "SCANIA", tipo: "ARTICULADO" },
             { numInterno: 1790, patente: "PGTV13", modelo: "SCANIA", tipo: "ARTICULADO" },
-            { numInterno: 893, patente: "SGPY89", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 1503, patente: "SHCV70", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 909, patente: "SHCV76", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 913, patente: "SHCV80", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 917, patente: "SHCV84", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 918, patente: "SHCV85", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 919, patente: "SHCX36", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 920, patente: "SHCX37", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 921, patente: "SHCX38", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 925, patente: "SHCX56", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 926, patente: "SHCX57", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 927, patente: "SHCX59", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 928, patente: "SHCX62", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 929, patente: "SHCX63", modelo: "VOLVO", tipo: "RIGIDO" },
             { numInterno: 933, patente: "SHCY14", modelo: "VOLVO", tipo: "ARTICULADO" },
-            { numInterno: 935, patente: "SHCY21", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 938, patente: "SHCY24", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 939, patente: "SHCY25", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 940, patente: "SHCY26", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 943, patente: "SHCY29", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 946, patente: "SHCY52", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 947, patente: "SHCY53", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 948, patente: "SHCY54", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 949, patente: "SHCY99", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 1445, patente: "SHXD58", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 1446, patente: "SHXD59", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 1447, patente: "SHXD60", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 1448, patente: "SHXD68", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 1449, patente: "SHXD69", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 1450, patente: "SHXD70", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 1451, patente: "SHXD71", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 1452, patente: "SHXD72", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 1453, patente: "SHXD73", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 1473, patente: "SHXG33", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 1474, patente: "SHXG35", modelo: "VOLVO", tipo: "RIGIDO" },
             { numInterno: 1477, patente: "SHXG39", modelo: "VOLVO", tipo: "ARTICULADO" },
             { numInterno: 1478, patente: "SHXG41", modelo: "VOLVO", tipo: "ARTICULADO" },
             { numInterno: 1479, patente: "SHXG43", modelo: "VOLVO", tipo: "ARTICULADO" },
@@ -939,45 +918,12 @@
             { numInterno: 1485, patente: "SJPC25", modelo: "VOLVO", tipo: "ARTICULADO" },
             { numInterno: 1486, patente: "SJPC28", modelo: "VOLVO", tipo: "ARTICULADO" },
             { numInterno: 1805, patente: "SJPC29", modelo: "VOLVO", tipo: "ARTICULADO" },
-            { numInterno: 1635, patente: "SJPC72", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 1651, patente: "SJPD55", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 1652, patente: "SJPD56", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 1653, patente: "SJPD58", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 1654, patente: "SJPD70", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 1657, patente: "SJPD75", modelo: "VOLVO", tipo: "RIGIDO" },
             { numInterno: 1487, patente: "SJPD76", modelo: "VOLVO", tipo: "ARTICULADO" },
             { numInterno: 1488, patente: "SJPD77", modelo: "VOLVO", tipo: "ARTICULADO" },
             { numInterno: 1489, patente: "SJPD78", modelo: "VOLVO", tipo: "ARTICULADO" },
-            { numInterno: 1658, patente: "SJPD79", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 1659, patente: "SJPD80", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 1660, patente: "SJPD81", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 1661, patente: "SJPD82", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 1662, patente: "SJPD84", modelo: "VOLVO", tipo: "RIGIDO" },
             { numInterno: 1490, patente: "SJPD85", modelo: "VOLVO", tipo: "ARTICULADO" },
-            { numInterno: 1664, patente: "SJPF40", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 1669, patente: "SJPF83", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 1670, patente: "SJPF84", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 1671, patente: "SJPF85", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 1672, patente: "SJPF91", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 1673, patente: "SJPF92", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 1674, patente: "SJPF93", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 1675, patente: "SJPF94", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 1676, patente: "SJPF95", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 1677, patente: "SJPF96", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 1678, patente: "SJPF97", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 1679, patente: "SJPF98", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 1680, patente: "SJPF99", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 1681, patente: "SKPH68", modelo: "VOLVO", tipo: "RIGIDO" },
             { numInterno: 1491, patente: "SKPH69", modelo: "VOLVO", tipo: "ARTICULADO" },
-            { numInterno: 1683, patente: "SKPH72", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 1685, patente: "SKPH74", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 1686, patente: "SKPH75", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 1687, patente: "SKPH77", modelo: "VOLVO", tipo: "RIGIDO" },
             { numInterno: 1492, patente: "SKPH79", modelo: "VOLVO", tipo: "ARTICULADO" },
-            { numInterno: 1689, patente: "SKPH81", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 1690, patente: "SKPH82", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 1691, patente: "SKPH83", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 1692, patente: "SKPJ43", modelo: "VOLVO", tipo: "RIGIDO" },
             { numInterno: 1493, patente: "SKPJ45", modelo: "VOLVO", tipo: "ARTICULADO" },
             { numInterno: 1494, patente: "SKPJ46", modelo: "VOLVO", tipo: "ARTICULADO" },
             { numInterno: 1495, patente: "SKPJ48", modelo: "VOLVO", tipo: "ARTICULADO" },
@@ -985,105 +931,8 @@
             { numInterno: 1497, patente: "SKPJ53", modelo: "VOLVO", tipo: "ARTICULADO" },
             { numInterno: 1498, patente: "SKPJ54", modelo: "VOLVO", tipo: "ARTICULADO" },
             { numInterno: 1499, patente: "SKPK17", modelo: "VOLVO", tipo: "ARTICULADO" },
-            { numInterno: 1836, patente: "SKPK33", modelo: "VOLVO", tipo: "RIGIDO" },
-            { numInterno: 1842, patente: "SKPK41", modelo: "VOLVO", tipo: "RIGIDO" },
             { numInterno: 1500, patente: "SKPK59", modelo: "VOLVO", tipo: "ARTICULADO" },
-            { numInterno: 1501, patente: "SKPK60", modelo: "VOLVO", tipo: "ARTICULADO" },
-            { numInterno: 1507, patente: "SLGS86", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1508, patente: "SLGS87", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1509, patente: "SLGS89", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1510, patente: "SLGS90", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1511, patente: "SLGS92", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1512, patente: "SLGS94", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1513, patente: "SLGS95", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1514, patente: "SLGS96", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1515, patente: "SLGS98", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1516, patente: "SLGS99", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1517, patente: "SLGT10", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1518, patente: "SLGT13", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1519, patente: "SLGT27", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1520, patente: "SLGT29", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1521, patente: "SLGT31", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1522, patente: "SLGT32", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1523, patente: "SLGT34", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1524, patente: "SLGT36", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1525, patente: "SLGT37", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1526, patente: "SLGT38", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1527, patente: "SLLY52", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1528, patente: "SLLY78", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1529, patente: "SLLY81", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1530, patente: "SLLY86", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1531, patente: "SLLY91", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1532, patente: "SLLY99", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1533, patente: "SLLZ26", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1534, patente: "SLLZ29", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1535, patente: "SLLZ31", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1536, patente: "SLLZ36", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1537, patente: "SLLZ38", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1538, patente: "SLLZ39", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1539, patente: "SLLZ40", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1540, patente: "SLLZ43", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1541, patente: "SLLZ46", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1542, patente: "SLLZ47", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1543, patente: "SLLZ51", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1544, patente: "SLLZ56", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1545, patente: "SLLZ63", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1546, patente: "SLLZ77", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1547, patente: "SLLZ93", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1548, patente: "SLLZ98", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1549, patente: "SLPB18", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1550, patente: "SLPB29", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1551, patente: "SLPB36", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1552, patente: "SLPB44", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1553, patente: "SLPB45", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1554, patente: "SLPB47", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1555, patente: "SLPB49", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1556, patente: "SLPB53", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1557, patente: "SLPB64", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1558, patente: "SLPB66", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1559, patente: "SLPB69", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1560, patente: "SLPB71", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1561, patente: "SLPB73", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1562, patente: "SLPB83", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1563, patente: "SLPB84", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1564, patente: "SLPB86", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1565, patente: "SLPB87", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1566, patente: "SLPB92", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1567, patente: "SLPB94", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1568, patente: "SLPB98", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1569, patente: "SLPC10", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1570, patente: "SLPC11", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1571, patente: "SLPC12", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1572, patente: "SLPC14", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1573, patente: "SLPC18", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1574, patente: "SLPC22", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1575, patente: "SLPC24", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1576, patente: "SLPC25", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1577, patente: "SLPC26", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1578, patente: "SLPC27", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1579, patente: "SLPC29", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1580, patente: "SLPC30", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1581, patente: "SLPC32", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1582, patente: "SLPC36", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1583, patente: "SLPC38", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1584, patente: "SLPC40", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1585, patente: "SLPC41", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1586, patente: "SLPC43", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1587, patente: "SLPC48", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1588, patente: "SLPC49", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1589, patente: "SLPC50", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1590, patente: "SLPC51", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1591, patente: "SLPC52", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1592, patente: "SLPC54", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 1593, patente: "SLPC58", modelo: "FOTON", tipo: "ELECTRICO" },
-            { numInterno: 2070, patente: "FLXT77", modelo: "LO 916", tipo: "LIEBRE" },
-            { numInterno: 2071, patente: "FLXT78", modelo: "LO 916", tipo: "LIEBRE" },
-            { numInterno: 2072, patente: "FLXT79", modelo: "LO 916", tipo: "LIEBRE" },
-            { numInterno: 2073, patente: "FLXT80", modelo: "LO 916", tipo: "LIEBRE" },
-            { numInterno: 2074, patente: "FLXT81", modelo: "LO 916", tipo: "LIEBRE" },
-            { numInterno: 2075, patente: "FLXT82", modelo: "LO 916", tipo: "LIEBRE" },
-            { numInterno: 2076, patente: "FLXT83", modelo: "LO 916", tipo: "LIEBRE" },
-            { numInterno: 2077, patente: "FLXT84", modelo: "LO 916", tipo: "LIEBRE" }
+            { numInterno: 1501, patente: "SKPK60", modelo: "VOLVO", tipo: "ARTICULADO" }
         ];
 
         // Variables para la paginación
@@ -1106,37 +955,147 @@
 
         // Inicializar la flota completa
         function inicializarFlota() {
+            console.log("Inicializando flota...");
             flotaCompleta = [...datosFlota];
             busesSinCarga = [...flotaCompleta];  // Inicialmente, todos los buses están sin carga
             filteredBusesSinCarga = [...busesSinCarga];
+            filteredBusesCargados = [];
+            busesCargados = [];
+
+            // Inicializar los selectores de filtro
+            actualizarFiltros();
+
+            // Actualizar el dashboard
             updateDashboard();
+
+            console.log(`Flota inicializada: ${flotaCompleta.length} buses en total`);
         }
 
         // Función para procesar el archivo de carga
         function procesarArchivoCarga(archivo) {
+            console.log("Procesando archivo:", archivo.name);
+            const loader = document.getElementById('loader');
+            if (loader) loader.style.display = 'block';
+
             const reader = new FileReader();
 
             reader.onload = function (e) {
-                const data = new Uint8Array(e.target.result);
                 try {
+                    const data = new Uint8Array(e.target.result);
+                    console.log("Archivo leído correctamente");
+
                     // Procesar el archivo Excel
                     const workbook = XLSX.read(data, { cellDates: true });
+                    console.log("Hojas en el archivo:", workbook.SheetNames);
 
                     // Obtener la primera hoja
                     const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
 
-                    // Convertir a JSON (fila 3 contiene los encabezados)
-                    const jsonData = XLSX.utils.sheet_to_json(firstSheet, { range: 2 });
+                    // Intentar diferentes rangos para encontrar los encabezados
+                    let jsonData;
+                    try {
+                        // Primero intentamos con encabezados en la tercera fila (índice 2)
+                        jsonData = XLSX.utils.sheet_to_json(firstSheet, { range: 2 });
+                        console.log("Procesando con encabezados en fila 3");
+
+                        // Si no hay datos o los encabezados no son los esperados, probar con la segunda fila
+                        if (jsonData.length === 0 || !jsonData[0]['Número interno']) {
+                            jsonData = XLSX.utils.sheet_to_json(firstSheet, { range: 1 });
+                            console.log("Procesando con encabezados en fila 2");
+                        }
+
+                        // Si aún no hay datos, probar con la primera fila
+                        if (jsonData.length === 0 || !jsonData[0]['Número interno']) {
+                            jsonData = XLSX.utils.sheet_to_json(firstSheet, { range: 0 });
+                            console.log("Procesando con encabezados en fila 1");
+                        }
+
+                        // Si sigue sin haber datos, probar con conversión directa sin encabezados
+                        if (jsonData.length === 0) {
+                            // Leer sin encabezados y asignar nombres de columna manualmente
+                            const rawData = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
+                            console.log("Procesando en modo raw:", rawData.length, "filas");
+
+                            // Buscar la fila que podría contener los encabezados
+                            let headerIndex = -1;
+                            for (let i = 0; i < Math.min(10, rawData.length); i++) {
+                                const row = rawData[i];
+                                if (row && row.length > 0) {
+                                    // Buscar palabras clave en los encabezados
+                                    const rowStr = row.join(' ').toLowerCase();
+                                    if (rowStr.includes('interno') || rowStr.includes('patente') || rowStr.includes('combustible')) {
+                                        headerIndex = i;
+                                        break;
+                                    }
+                                }
+                            }
+
+                            if (headerIndex !== -1) {
+                                // Crear un nuevo array con los encabezados encontrados
+                                const headers = rawData[headerIndex];
+                                jsonData = [];
+
+                                // Procesar las filas de datos
+                                for (let i = headerIndex + 1; i < rawData.length; i++) {
+                                    const row = rawData[i];
+                                    if (row && row.length > 0) {
+                                        const dataObj = {};
+                                        for (let j = 0; j < headers.length; j++) {
+                                            if (headers[j]) dataObj[headers[j]] = row[j];
+                                        }
+                                        jsonData.push(dataObj);
+                                    }
+                                }
+                                console.log("Datos procesados en modo manual:", jsonData.length);
+                            }
+                        }
+                    } catch (error) {
+                        console.error("Error al procesar el archivo con encabezados:", error);
+                        // Última opción: leer como matriz y hacer una conversión manual
+                        const rawData = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
+
+                        // Buscar la fila que parece contener datos de buses
+                        for (let i = 0; i < rawData.length; i++) {
+                            const row = rawData[i];
+                            // Buscar si hay algún número que podría ser un bus interno
+                            if (row && row.some(cell => typeof cell === 'number' && cell > 500 && cell < 3000)) {
+                                console.log("Posible fila de datos encontrada en índice:", i);
+                                break;
+                            }
+                        }
+
+                        console.log("Datos raw:", rawData.slice(0, 5));
+                        throw new Error("No se pudieron procesar los datos automáticamente");
+                    }
+
+                    // Verificar que se encontraron datos
+                    if (!jsonData || jsonData.length === 0) {
+                        throw new Error("No se encontraron datos válidos en el archivo");
+                    }
+
+                    console.log("Datos encontrados:", jsonData.length, "registros");
+                    console.log("Muestra:", jsonData.slice(0, 2));
 
                     // Procesar los datos
                     procesarDatosCarga(jsonData);
 
+                    // Ocultar el loader
+                    if (loader) loader.style.display = 'none';
+
                     // Mostrar mensaje de éxito
-                    alert('Archivo procesado correctamente');
+                    alert('Archivo procesado correctamente: ' + jsonData.length + ' registros');
+
                 } catch (error) {
                     console.error('Error al procesar el archivo:', error);
-                    alert('Error al procesar el archivo. Verifica que sea un archivo Excel válido.');
+                    if (loader) loader.style.display = 'none';
+                    alert('Error al procesar el archivo: ' + error.message + '\nVerifica que sea un archivo Excel válido con el formato correcto.');
                 }
+            };
+
+            reader.onerror = function (error) {
+                console.error('Error al leer el archivo:', error);
+                if (loader) loader.style.display = 'none';
+                alert('Error al leer el archivo: ' + error.message);
             };
 
             reader.readAsArrayBuffer(archivo);
@@ -1144,29 +1103,133 @@
 
         // Función para procesar los datos de carga
         function procesarDatosCarga(datos) {
+            console.log("Iniciando procesamiento de datos de carga...");
+
             // Limpiar datos previos
             busesCargados = [];
 
-            // Procesar cada registro
-            datos.forEach(item => {
-                if (item['Número interno'] && item['Patente']) {
-                    const fecha = item['Fecha'] ? new Date(item['Fecha']) : new Date();
-                    const hora = item['Hora'] ? new Date(item['Hora']) : new Date();
+            // Identificar los nombres de columnas
+            const primeraFila = datos[0];
+            let campoNumeroInterno = null;
+            let campoPatente = null;
+            let campoFecha = null;
+            let campoHora = null;
+            let campoLitros = null;
+            let campoTerminal = null;
+            let campoTipo = null;
+            let campoModelo = null;
 
-                    busesCargados.push({
-                        numInterno: item['Número interno'],
-                        patente: item['Patente'],
-                        fecha: fecha.toLocaleDateString('es-CL'),
-                        hora: hora.toLocaleTimeString('es-CL'),
-                        litros: item['Cantidad litros'] || 0,
-                        terminal: item['Terminal'] || 'N/A',
-                        tipo: item['Tipo'] || 'N/A',
-                        modelo: item['Modelo chasis'] || 'N/A'
-                    });
+            // Buscar campos equivalentes
+            for (const campo in primeraFila) {
+                const campoLC = campo.toLowerCase();
+                if (campoLC.includes('interno') || campoLC.includes('número')) {
+                    campoNumeroInterno = campo;
+                } else if (campoLC.includes('patente') || campoLC.includes('ppu')) {
+                    campoPatente = campo;
+                } else if (campoLC.includes('fecha')) {
+                    campoFecha = campo;
+                } else if (campoLC.includes('hora')) {
+                    campoHora = campo;
+                } else if (campoLC.includes('litros') || campoLC.includes('cantidad')) {
+                    campoLitros = campo;
+                } else if (campoLC.includes('terminal')) {
+                    campoTerminal = campo;
+                } else if (campoLC.includes('tipo')) {
+                    campoTipo = campo;
+                } else if (campoLC.includes('modelo') || campoLC.includes('chasis')) {
+                    campoModelo = campo;
+                }
+            }
+
+            console.log("Campos identificados:", {
+                numeroInterno: campoNumeroInterno,
+                patente: campoPatente,
+                fecha: campoFecha,
+                hora: campoHora,
+                litros: campoLitros,
+                terminal: campoTerminal,
+                tipo: campoTipo,
+                modelo: campoModelo
+            });
+
+            // Verificar que al menos tenemos los campos esenciales
+            if (!campoNumeroInterno || !campoPatente) {
+                throw new Error("No se encontraron las columnas necesarias en el archivo (Número interno, Patente)");
+            }
+
+            // Procesar cada registro
+            let registrosValidos = 0;
+
+            datos.forEach((item, index) => {
+                // Obtener los valores de los campos
+                const numInterno = item[campoNumeroInterno];
+                const patente = item[campoPatente];
+
+                // Verificar que tenemos los campos obligatorios
+                if (numInterno && patente) {
+                    // Convertir fecha y hora
+                    let fecha, hora;
+
+                    try {
+                        // Procesar fecha
+                        if (campoFecha && item[campoFecha]) {
+                            // Verificar si es un string o un objeto Date
+                            if (item[campoFecha] instanceof Date) {
+                                fecha = item[campoFecha];
+                            } else if (typeof item[campoFecha] === 'string') {
+                                // Intentar parsear como fecha
+                                fecha = new Date(item[campoFecha]);
+                            } else {
+                                // Número (fecha de Excel)
+                                fecha = new Date(item[campoFecha]);
+                            }
+                        } else {
+                            fecha = new Date();
+                        }
+
+                        // Procesar hora
+                        if (campoHora && item[campoHora]) {
+                            if (item[campoHora] instanceof Date) {
+                                hora = item[campoHora];
+                            } else if (typeof item[campoHora] === 'string') {
+                                // Procesar hora como string
+                                hora = new Date('1970-01-01T' + item[campoHora]);
+                            } else {
+                                // Número (hora de Excel)
+                                hora = new Date(item[campoHora]);
+                            }
+                        } else {
+                            hora = new Date();
+                        }
+                    } catch (error) {
+                        console.warn(`Error al procesar fecha/hora en registro ${index}:`, error);
+                        fecha = new Date();
+                        hora = new Date();
+                    }
+
+                    // Crear objeto de bus cargado
+                    const busCargado = {
+                        numInterno: parseInt(numInterno) || numInterno,
+                        patente: patente.toString(),
+                        fecha: fecha instanceof Date ? fecha.toLocaleDateString('es-CL') : 'N/A',
+                        hora: hora instanceof Date ? hora.toLocaleTimeString('es-CL') : 'N/A',
+                        litros: campoLitros ? (parseInt(item[campoLitros]) || 0) : 0,
+                        terminal: campoTerminal && item[campoTerminal] ? item[campoTerminal].toString() : 'N/A',
+                        tipo: campoTipo && item[campoTipo] ? item[campoTipo].toString() : 'N/A',
+                        modelo: campoModelo && item[campoModelo] ? item[campoModelo].toString() : 'N/A'
+                    };
+
+                    busesCargados.push(busCargado);
+                    registrosValidos++;
                 }
             });
 
-            console.log("Procesados", busesCargados.length, "registros de carga");
+            console.log(`Se procesaron ${registrosValidos} registros válidos de ${datos.length} totales`);
+
+            // Si no se encontraron registros válidos, mostrar un error
+            if (registrosValidos === 0) {
+                throw new Error("No se encontraron registros válidos en el archivo");
+            }
 
             // Actualizar buses sin carga
             actualizarBusesSinCarga();
@@ -1184,85 +1247,152 @@
 
         // Función para actualizar los buses sin carga
         function actualizarBusesSinCarga() {
+            console.log("Actualizando buses sin carga...");
+
             // Obtener los números internos de los buses con carga
-            const busesConCarga = new Set(busesCargados.map(bus => bus.numInterno));
+            const busesConCarga = new Set();
+            busesCargados.forEach(bus => {
+                // Asegurar que sea un número
+                let numInterno = bus.numInterno;
+                if (typeof numInterno === 'string') {
+                    numInterno = parseInt(numInterno);
+                }
+                if (!isNaN(numInterno)) {
+                    busesConCarga.add(numInterno);
+                }
+            });
+
             console.log("Buses con carga:", busesConCarga.size);
 
             // Filtrar la flota para obtener los buses sin carga
-            busesSinCarga = flotaCompleta.filter(bus => !busesConCarga.has(bus.numInterno));
+            busesSinCarga = flotaCompleta.filter(bus => {
+                const numInterno = parseInt(bus.numInterno);
+                return !busesConCarga.has(numInterno);
+            });
+
             filteredBusesSinCarga = [...busesSinCarga];
-            
-            console.log("Buses sin carga:", busesSinCarga.length);
+
+            console.log("Buses sin carga:", busesSinCarga.length, "de", flotaCompleta.length);
         }
 
         // Función para actualizar los filtros selectores
         function actualizarFiltros() {
+            console.log("Actualizando filtros...");
+
             // Obtener modelos únicos
             const modelos = new Set();
-            flotaCompleta.forEach(bus => modelos.add(bus.modelo));
-            busesCargados.forEach(bus => modelos.add(bus.modelo));
+            flotaCompleta.forEach(bus => {
+                if (bus.modelo) modelos.add(bus.modelo);
+            });
+            busesCargados.forEach(bus => {
+                if (bus.modelo) modelos.add(bus.modelo);
+            });
 
             // Obtener tipos únicos
             const tipos = new Set();
-            flotaCompleta.forEach(bus => tipos.add(bus.tipo));
-            busesCargados.forEach(bus => tipos.add(bus.tipo));
+            flotaCompleta.forEach(bus => {
+                if (bus.tipo) tipos.add(bus.tipo);
+            });
+            busesCargados.forEach(bus => {
+                if (bus.tipo) tipos.add(bus.tipo);
+            });
 
             // Obtener terminales únicos
             const terminales = new Set();
-            busesCargados.forEach(bus => terminales.add(bus.terminal));
+            busesCargados.forEach(bus => {
+                if (bus.terminal) terminales.add(bus.terminal);
+            });
 
             // Actualizar selector de modelos
             const modeloSelector = document.getElementById('filter-modelo');
-            modeloSelector.innerHTML = '<option value="">Todos los modelos</option>';
-            modelos.forEach(modelo => {
-                if (modelo) {
-                    const option = document.createElement('option');
-                    option.value = modelo;
-                    option.textContent = modelo;
-                    modeloSelector.appendChild(option);
-                }
-            });
+            if (modeloSelector) {
+                modeloSelector.innerHTML = '<option value="">Todos los modelos</option>';
+                modelos.forEach(modelo => {
+                    if (modelo) {
+                        const option = document.createElement('option');
+                        option.value = modelo;
+                        option.textContent = modelo;
+                        modeloSelector.appendChild(option);
+                    }
+                });
+            }
 
             // Actualizar selector de tipos
             const tipoSelector = document.getElementById('filter-tipo');
-            tipoSelector.innerHTML = '<option value="">Todos los tipos</option>';
-            tipos.forEach(tipo => {
-                if (tipo) {
-                    const option = document.createElement('option');
-                    option.value = tipo;
-                    option.textContent = tipo;
-                    tipoSelector.appendChild(option);
-                }
-            });
+            if (tipoSelector) {
+                tipoSelector.innerHTML = '<option value="">Todos los tipos</option>';
+                tipos.forEach(tipo => {
+                    if (tipo) {
+                        const option = document.createElement('option');
+                        option.value = tipo;
+                        option.textContent = tipo;
+                        tipoSelector.appendChild(option);
+                    }
+                });
+            }
 
             // Actualizar selector de terminales
             const terminalSelector = document.getElementById('filter-terminal');
-            terminalSelector.innerHTML = '<option value="">Todos los terminales</option>';
-            terminales.forEach(terminal => {
-                if (terminal) {
-                    const option = document.createElement('option');
-                    option.value = terminal;
-                    option.textContent = terminal;
-                    terminalSelector.appendChild(option);
-                }
+            if (terminalSelector) {
+                terminalSelector.innerHTML = '<option value="">Todos los terminales</option>';
+                terminales.forEach(terminal => {
+                    if (terminal) {
+                        const option = document.createElement('option');
+                        option.value = terminal;
+                        option.textContent = terminal;
+                        terminalSelector.appendChild(option);
+                    }
+                });
+            }
+
+            console.log("Filtros actualizados:", {
+                modelos: modelos.size,
+                tipos: tipos.size,
+                terminales: terminales.size
             });
         }
 
         // Función para actualizar los gráficos
         function actualizarGraficos() {
+            console.log("Actualizando gráficos...");
+
+            // Verificar si hay datos de carga
+            if (busesCargados.length === 0) {
+                console.log("No hay datos de carga para generar gráficos");
+                return;
+            }
+
             actualizarGraficoHorario();
             actualizarGraficoModelo();
             actualizarGraficoTipo();
             actualizarGraficoLitros();
+
+            console.log("Gráficos actualizados");
         }
 
         // Función para actualizar el gráfico horario
         function actualizarGraficoHorario() {
             // Agrupar por hora
             const horasCarga = {};
+
+            // Verificar que tenemos canvas para el gráfico
+            const canvas = document.getElementById('hourly-chart');
+            if (!canvas) {
+                console.warn("No se encontró el canvas para el gráfico horario");
+                return;
+            }
+
             busesCargados.forEach(bus => {
-                const horaCompleta = bus.hora;
-                const hora = horaCompleta.split(':')[0]; // Obtener solo la hora
+                let hora = "00";
+
+                // Intentar extraer la hora del formato
+                if (bus.hora && typeof bus.hora === 'string') {
+                    const matches = bus.hora.match(/(\d{1,2}):/);
+                    if (matches && matches[1]) {
+                        hora = matches[1].padStart(2, '0'); // Asegurar formato de 2 dígitos
+                    }
+                }
+
                 horasCarga[hora] = (horasCarga[hora] || 0) + 1;
             });
 
@@ -1273,9 +1403,10 @@
             // Formatear las horas para mejor visualización
             const horasFormateadas = horas.map(hora => `${hora}:00 hrs`);
 
-            // Crear o actualizar el gráfico
-            const ctx = document.getElementById('hourly-chart').getContext('2d');
+            // Obtener el contexto 2D del canvas
+            const ctx = canvas.getContext('2d');
 
+            // Crear o actualizar el gráfico
             if (hourlyChart) {
                 hourlyChart.data.labels = horasFormateadas;
                 hourlyChart.data.datasets[0].data = cantidades;
@@ -1312,6 +1443,9 @@
                                 title: {
                                     display: true,
                                     text: 'Cantidad de buses'
+                                },
+                                ticks: {
+                                    precision: 0
                                 }
                             },
                             x: {
@@ -1328,6 +1462,13 @@
 
         // Función para actualizar el gráfico por modelo
         function actualizarGraficoModelo() {
+            // Verificar que tenemos canvas para el gráfico
+            const canvas = document.getElementById('model-chart');
+            if (!canvas) {
+                console.warn("No se encontró el canvas para el gráfico de modelo");
+                return;
+            }
+
             // Agrupar por modelo
             const modelosCarga = {};
             busesCargados.forEach(bus => {
@@ -1349,9 +1490,15 @@
                 'rgba(255, 159, 64, 0.7)'    // Naranja
             ];
 
-            // Crear o actualizar el gráfico
-            const ctx = document.getElementById('model-chart').getContext('2d');
+            // Asegurar que tenemos suficientes colores
+            while (colores.length < modelos.length) {
+                colores.push(...colores);
+            }
 
+            // Obtener el contexto 2D del canvas
+            const ctx = canvas.getContext('2d');
+
+            // Crear o actualizar el gráfico
             if (modelChart) {
                 modelChart.data.labels = modelos;
                 modelChart.data.datasets[0].data = cantidades;
@@ -1363,8 +1510,8 @@
                         labels: modelos,
                         datasets: [{
                             data: cantidades,
-                            backgroundColor: colores,
-                            borderColor: colores.map(color => color.replace('0.7', '1')),
+                            backgroundColor: colores.slice(0, modelos.length),
+                            borderColor: colores.slice(0, modelos.length).map(color => color.replace('0.7', '1')),
                             borderWidth: 1
                         }]
                     },
@@ -1396,6 +1543,13 @@
 
         // Función para actualizar el gráfico por tipo
         function actualizarGraficoTipo() {
+            // Verificar que tenemos canvas para el gráfico
+            const canvas = document.getElementById('type-chart');
+            if (!canvas) {
+                console.warn("No se encontró el canvas para el gráfico de tipo");
+                return;
+            }
+
             // Agrupar por tipo
             const tiposCarga = {};
             busesCargados.forEach(bus => {
@@ -1415,9 +1569,15 @@
                 'rgba(54, 162, 235, 0.7)'    // Azul claro
             ];
 
-            // Crear o actualizar el gráfico
-            const ctx = document.getElementById('type-chart').getContext('2d');
+            // Asegurar que tenemos suficientes colores
+            while (colores.length < tipos.length) {
+                colores.push(...colores);
+            }
 
+            // Obtener el contexto 2D del canvas
+            const ctx = canvas.getContext('2d');
+
+            // Crear o actualizar el gráfico
             if (typeChart) {
                 typeChart.data.labels = tipos;
                 typeChart.data.datasets[0].data = cantidades;
@@ -1429,8 +1589,8 @@
                         labels: tipos,
                         datasets: [{
                             data: cantidades,
-                            backgroundColor: colores,
-                            borderColor: colores.map(color => color.replace('0.7', '1')),
+                            backgroundColor: colores.slice(0, tipos.length),
+                            borderColor: colores.slice(0, tipos.length).map(color => color.replace('0.7', '1')),
                             borderWidth: 1
                         }]
                     },
@@ -1462,27 +1622,41 @@
 
         // Función para actualizar el gráfico de promedio de litros por modelo
         function actualizarGraficoLitros() {
+            // Verificar que tenemos canvas para el gráfico
+            const canvas = document.getElementById('liters-chart');
+            if (!canvas) {
+                console.warn("No se encontró el canvas para el gráfico de litros");
+                return;
+            }
+
             // Agrupar por modelo
             const litrosPorModelo = {};
             const conteoModelos = {};
 
             busesCargados.forEach(bus => {
                 const modelo = bus.modelo || 'No especificado';
+                const litros = parseInt(bus.litros) || 0;
+
                 if (!litrosPorModelo[modelo]) {
                     litrosPorModelo[modelo] = 0;
                     conteoModelos[modelo] = 0;
                 }
-                litrosPorModelo[modelo] += parseInt(bus.litros) || 0;
+
+                litrosPorModelo[modelo] += litros;
                 conteoModelos[modelo]++;
             });
 
             // Calcular promedios
             const modelos = Object.keys(litrosPorModelo);
-            const promedios = modelos.map(modelo => Math.round(litrosPorModelo[modelo] / conteoModelos[modelo]));
+            const promedios = modelos.map(modelo => {
+                if (conteoModelos[modelo] === 0) return 0;
+                return Math.round(litrosPorModelo[modelo] / conteoModelos[modelo]);
+            });
+
+            // Obtener el contexto 2D del canvas
+            const ctx = canvas.getContext('2d');
 
             // Crear o actualizar el gráfico
-            const ctx = document.getElementById('liters-chart').getContext('2d');
-
             if (litersChart) {
                 litersChart.data.labels = modelos;
                 litersChart.data.datasets[0].data = promedios;
@@ -1544,30 +1718,34 @@
 
         // Función para aplicar filtros
         function aplicarFiltros() {
-            const modelo = document.getElementById('filter-modelo').value;
-            const tipo = document.getElementById('filter-tipo').value;
-            const terminal = document.getElementById('filter-terminal').value;
-            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            console.log("Aplicando filtros...");
+
+            const modelo = document.getElementById('filter-modelo')?.value || '';
+            const tipo = document.getElementById('filter-tipo')?.value || '';
+            const terminal = document.getElementById('filter-terminal')?.value || '';
+            const searchTerm = document.getElementById('search-input')?.value?.toLowerCase() || '';
+
+            console.log("Filtros aplicados:", { modelo, tipo, terminal, searchTerm });
 
             // Filtrar buses sin carga
             filteredBusesSinCarga = busesSinCarga.filter(bus => {
-                const coincideModelo = !modelo || bus.modelo === modelo;
-                const coincideTipo = !tipo || bus.tipo === tipo;
+                const coincideModelo = !modelo || (bus.modelo && bus.modelo.toString() === modelo);
+                const coincideTipo = !tipo || (bus.tipo && bus.tipo.toString() === tipo);
                 const coincideTermino = !searchTerm ||
-                    bus.numInterno.toString().includes(searchTerm) ||
-                    bus.patente.toLowerCase().includes(searchTerm);
+                    (bus.numInterno && bus.numInterno.toString().includes(searchTerm)) ||
+                    (bus.patente && bus.patente.toString().toLowerCase().includes(searchTerm));
 
                 return coincideModelo && coincideTipo && coincideTermino;
             });
 
             // Filtrar buses con carga
             filteredBusesCargados = busesCargados.filter(bus => {
-                const coincideModelo = !modelo || bus.modelo === modelo;
-                const coincideTipo = !tipo || bus.tipo === tipo;
-                const coincideTerminal = !terminal || bus.terminal === terminal;
+                const coincideModelo = !modelo || (bus.modelo && bus.modelo.toString() === modelo);
+                const coincideTipo = !tipo || (bus.tipo && bus.tipo.toString() === tipo);
+                const coincideTerminal = !terminal || (bus.terminal && bus.terminal.toString() === terminal);
                 const coincideTermino = !searchTerm ||
-                    bus.numInterno.toString().includes(searchTerm) ||
-                    bus.patente.toLowerCase().includes(searchTerm);
+                    (bus.numInterno && bus.numInterno.toString().includes(searchTerm)) ||
+                    (bus.patente && bus.patente.toString().toLowerCase().includes(searchTerm));
 
                 return coincideModelo && coincideTipo && coincideTerminal && coincideTermino;
             });
@@ -1579,10 +1757,17 @@
             // Actualizar tablas
             updatePendientesTable();
             updateCargadosTable();
+
+            console.log("Resultados filtrados:", {
+                pendientes: filteredBusesSinCarga.length,
+                cargados: filteredBusesCargados.length
+            });
         }
 
         // Función para actualizar el dashboard con los datos
         function updateDashboard() {
+            console.log("Actualizando dashboard...");
+
             const totalBuses = flotaCompleta.length;
             const porcentajeCargados = Math.round((busesCargados.length / totalBuses) * 100) || 0;
             const porcentajePendientes = 100 - porcentajeCargados;
@@ -1609,18 +1794,30 @@
             // Actualizar las tablas
             updatePendientesTable();
             updateCargadosTable();
+
+            console.log("Dashboard actualizado");
         }
 
         // Función para actualizar la tabla de buses pendientes
         function updatePendientesTable() {
+            console.log("Actualizando tabla de buses pendientes...");
+
             const table = document.getElementById('buses-pendientes-body');
+            if (!table) {
+                console.warn("No se encontró la tabla de buses pendientes");
+                return;
+            }
+
             table.innerHTML = '';
 
             if (filteredBusesSinCarga.length === 0) {
                 const row = document.createElement('tr');
                 row.innerHTML = '<td colspan="5" class="text-center">No hay buses pendientes de carga o no se ha subido un archivo de carga.</td>';
                 table.appendChild(row);
-                document.getElementById('pendientes-pagination').innerHTML = '';
+
+                const paginacion = document.getElementById('pendientes-pagination');
+                if (paginacion) paginacion.innerHTML = '';
+
                 return;
             }
 
@@ -1633,12 +1830,12 @@
                 const row = document.createElement('tr');
 
                 row.innerHTML = `
-                    <td class="cell-highlight">${bus.numInterno}</td>
-                    <td>${bus.patente}</td>
-                    <td>${bus.modelo}</td>
-                    <td>${bus.tipo}</td>
-                    <td><span class="badge badge-warning">Pendiente</span></td>
-                `;
+            <td class="cell-highlight">${bus.numInterno}</td>
+            <td>${bus.patente}</td>
+            <td>${bus.modelo}</td>
+            <td>${bus.tipo}</td>
+            <td><span class="badge badge-warning">Pendiente</span></td>
+        `;
 
                 table.appendChild(row);
             }
@@ -1647,20 +1844,33 @@
             if (!showAllPendientes) {
                 updatePagination('pendientes-pagination', filteredBusesSinCarga.length, currentPendientesPage, pendientesItemsPerPage, updatePendientesPage);
             } else {
-                document.getElementById('pendientes-pagination').innerHTML = '';
+                const paginacion = document.getElementById('pendientes-pagination');
+                if (paginacion) paginacion.innerHTML = '';
             }
+
+            console.log(`Tabla de pendientes actualizada: mostrando ${endIndex - startIndex} de ${filteredBusesSinCarga.length} buses`);
         }
 
         // Función para actualizar la tabla de buses cargados
         function updateCargadosTable() {
+            console.log("Actualizando tabla de buses cargados...");
+
             const table = document.getElementById('buses-cargados-body');
+            if (!table) {
+                console.warn("No se encontró la tabla de buses cargados");
+                return;
+            }
+
             table.innerHTML = '';
 
             if (filteredBusesCargados.length === 0) {
                 const row = document.createElement('tr');
                 row.innerHTML = '<td colspan="7" class="text-center">No hay buses con carga o no se ha subido un archivo de carga.</td>';
                 table.appendChild(row);
-                document.getElementById('cargados-pagination').innerHTML = '';
+
+                const paginacion = document.getElementById('cargados-pagination');
+                if (paginacion) paginacion.innerHTML = '';
+
                 return;
             }
 
@@ -1673,14 +1883,14 @@
                 const row = document.createElement('tr');
 
                 row.innerHTML = `
-                    <td class="cell-highlight">${bus.numInterno}</td>
-                    <td>${bus.patente}</td>
-                    <td>${bus.fecha}</td>
-                    <td>${bus.hora}</td>
-                    <td>${bus.litros} L</td>
-                    <td>${bus.terminal}</td>
-                    <td>${bus.modelo}</td>
-                `;
+            <td class="cell-highlight">${bus.numInterno}</td>
+            <td>${bus.patente}</td>
+            <td>${bus.fecha}</td>
+            <td>${bus.hora}</td>
+            <td>${bus.litros} L</td>
+            <td>${bus.terminal}</td>
+            <td>${bus.modelo}</td>
+        `;
 
                 table.appendChild(row);
             }
@@ -1689,13 +1899,21 @@
             if (!showAllCargados) {
                 updatePagination('cargados-pagination', filteredBusesCargados.length, currentCargadosPage, cargadosItemsPerPage, updateCargadosPage);
             } else {
-                document.getElementById('cargados-pagination').innerHTML = '';
+                const paginacion = document.getElementById('cargados-pagination');
+                if (paginacion) paginacion.innerHTML = '';
             }
+
+            console.log(`Tabla de cargados actualizada: mostrando ${endIndex - startIndex} de ${filteredBusesCargados.length} buses`);
         }
 
         // Función para actualizar la paginación
         function updatePagination(containerId, totalItems, currentPage, itemsPerPage, pageChangeFunction) {
             const container = document.getElementById(containerId);
+            if (!container) {
+                console.warn(`No se encontró el contenedor de paginación: ${containerId}`);
+                return;
+            }
+
             container.innerHTML = '';
 
             const totalPages = Math.ceil(totalItems / itemsPerPage);
@@ -1775,6 +1993,8 @@
 
         // Función para exportar a Excel
         function exportToExcel() {
+            console.log("Exportando a Excel...");
+
             // Crear un libro de trabajo
             const wb = XLSX.utils.book_new();
 
@@ -1823,36 +2043,73 @@
                 ['Buses con Carga', busesCargados.length],
                 ['Buses Pendientes', busesSinCarga.length],
                 ['Porcentaje Cargados', `${Math.round((busesCargados.length / flotaCompleta.length) * 100)}%`],
-                ['Porcentaje Pendientes', `${Math.round((busesSinCarga.length / flotaCompleta.length) * 100)}%`],
-                ['Promedio de Litros', `${Math.round(busesCargados.reduce((sum, bus) => sum + parseInt(bus.litros || 0), 0) / busesCargados.length)} L`],
+                ['Porcentaje Pendientes', `${Math.round((busesSinCarga.length / flotaCompleta.length) * 100)}%`]
+            ];
+
+            // Añadir promedio de litros solo si hay buses cargados
+            if (busesCargados.length > 0) {
+                const totalLitros = busesCargados.reduce((sum, bus) => sum + parseInt(bus.litros || 0), 0);
+                const promedioLitros = Math.round(totalLitros / busesCargados.length);
+                resumenData.push(['Promedio de Litros', `${promedioLitros} L`]);
+            } else {
+                resumenData.push(['Promedio de Litros', '0 L']);
+            }
+
+            resumenData.push(
                 ['Fecha de Reporte', formatCurrentDate()],
                 ['Hora de Reporte', formatCurrentTime()]
-            ];
+            );
 
             const resumenSheet = XLSX.utils.aoa_to_sheet(resumenData);
             XLSX.utils.book_append_sheet(wb, resumenSheet, 'Resumen');
 
             // Exportar el libro
-            XLSX.writeFile(wb, `Reporte_Combustible_LoEchevers_${new Date().toISOString().split('T')[0]}.xlsx`);
+            const fileName = `Reporte_Combustible_LoEchevers_${new Date().toISOString().split('T')[0]}.xlsx`;
+            XLSX.writeFile(wb, fileName);
+
+            console.log(`Excel exportado como: ${fileName}`);
         }
 
         // Función para exportar a PDF
         function exportToPDF() {
+            console.log("Exportando a PDF...");
+
+            // Verificar si jsPDF está disponible
+            if (typeof window.jspdf === 'undefined' || !window.jspdf.jsPDF) {
+                console.error("Error: jsPDF no está disponible");
+                alert("Error: No se puede generar el PDF porque la librería jsPDF no está disponible");
+                return;
+            }
+
             const { jsPDF } = window.jspdf;
 
             // Determinar qué tabla exportar basado en la pestaña activa
-            const activeTab = document.querySelector('.tab.active').getAttribute('data-tab');
+            const activeTab = document.querySelector('.tab.active');
+            if (!activeTab) {
+                console.error("Error: No se pudo encontrar la pestaña activa");
+                alert("Error: No se pudo determinar qué tabla exportar");
+                return;
+            }
+
+            const tabId = activeTab.getAttribute('data-tab');
             let tableContainer;
             let title;
 
-            if (activeTab === 'pendientes') {
+            if (tabId === 'pendientes') {
                 tableContainer = document.getElementById('pendientes-table-container');
                 title = 'Buses Pendientes de Carga';
-            } else if (activeTab === 'cargados') {
+            } else if (tabId === 'cargados') {
                 tableContainer = document.getElementById('cargados-table-container');
                 title = 'Buses con Carga Completada';
             } else {
                 alert('Seleccione la pestaña de pendientes o cargados para exportar a PDF');
+                console.warn("Pestaña seleccionada no es una tabla:", tabId);
+                return;
+            }
+
+            if (!tableContainer) {
+                console.error(`Error: No se encontró el contenedor de la tabla para ${tabId}`);
+                alert("Error: No se pudo encontrar la tabla para exportar");
                 return;
             }
 
@@ -1888,6 +2145,14 @@
             // Añadir al documento temporalmente
             document.body.appendChild(tempDiv);
 
+            // Generar PDF usando html2canvas
+            if (typeof html2canvas === 'undefined') {
+                console.error("Error: html2canvas no está disponible");
+                alert("Error: No se puede generar el PDF porque la librería html2canvas no está disponible");
+                document.body.removeChild(tempDiv);
+                return;
+            }
+
             // Generar PDF
             html2canvas(tempDiv, {
                 scale: 2, // Mayor calidad
@@ -1913,7 +2178,19 @@
                 pdf.text('Sistema de Análisis de Combustible', pdfWidth / 2, 15, { align: 'center' });
 
                 pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
-                pdf.save(`${title}_${new Date().toISOString().split('T')[0]}.pdf`);
+
+                const fileName = `${title.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.pdf`;
+                pdf.save(fileName);
+
+                console.log(`PDF exportado como: ${fileName}`);
+            }).catch(error => {
+                console.error("Error al generar el PDF:", error);
+                alert("Error al generar el PDF: " + error.message);
+
+                // Asegurar que eliminamos el contenedor temporal en caso de error
+                if (document.body.contains(tempDiv)) {
+                    document.body.removeChild(tempDiv);
+                }
             });
         }
 
@@ -1924,165 +2201,230 @@
 
         // Event Listeners
         document.addEventListener('DOMContentLoaded', () => {
-            // Inicializar la flota
-            inicializarFlota();
-            
-            // Configurar tabs
-            const tabs = document.querySelectorAll('.tab');
-            tabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    const tabId = tab.getAttribute('data-tab');
-                    
-                    // Actualizar clases active
-                    tabs.forEach(t => t.classList.remove('active'));
-                    tab.classList.add('active');
-                    
-                    document.querySelectorAll('.tab-content').forEach(content => {
-                        content.classList.remove('active');
+            console.log("Documento cargado, inicializando aplicación...");
+
+            try {
+                // Inicializar la flota
+                inicializarFlota();
+
+                // Configurar tabs
+                const tabs = document.querySelectorAll('.tab');
+                if (tabs) {
+                    tabs.forEach(tab => {
+                        tab.addEventListener('click', () => {
+                            const tabId = tab.getAttribute('data-tab');
+
+                            // Actualizar clases active
+                            tabs.forEach(t => t.classList.remove('active'));
+                            tab.classList.add('active');
+
+                            document.querySelectorAll('.tab-content').forEach(content => {
+                                content.classList.remove('active');
+                            });
+
+                            const tabContent = document.getElementById(`${tabId}-tab`);
+                            if (tabContent) {
+                                tabContent.classList.add('active');
+                            } else {
+                                console.warn(`Tab content not found: ${tabId}-tab`);
+                            }
+                        });
                     });
-                    
-                    document.getElementById(`${tabId}-tab`).classList.add('active');
-                });
-            });
-            
-            // Configurar búsqueda
-            document.getElementById('search-button').addEventListener('click', aplicarFiltros);
-            document.getElementById('search-input').addEventListener('keyup', e => {
-                if (e.key === 'Enter') {
-                    aplicarFiltros();
                 }
-            });
-            
-            // Configurar filtros
-            document.getElementById('filter-modelo').addEventListener('change', aplicarFiltros);
-            document.getElementById('filter-tipo').addEventListener('change', aplicarFiltros);
-            document.getElementById('filter-terminal').addEventListener('change', aplicarFiltros);
-            
-            // Configurar opciones de paginación
-            document.getElementById('pendientes-per-page').addEventListener('change', (e) => {
-                pendientesItemsPerPage = parseInt(e.target.value);
-                currentPendientesPage = 1;
-                showAllPendientes = false;
-                document.getElementById('show-all-pendientes').classList.remove('active');
-                updatePendientesTable();
-            });
-            
-            document.getElementById('cargados-per-page').addEventListener('change', (e) => {
-                cargadosItemsPerPage = parseInt(e.target.value);
-                currentCargadosPage = 1;
-                showAllCargados = false;
-                document.getElementById('show-all-cargados').classList.remove('active');
-                updateCargadosTable();
-            });
-            
-            // Configurar botones "Mostrar todos"
-            document.getElementById('show-all-pendientes').addEventListener('click', () => {
-                showAllPendientes = !showAllPendientes;
-                document.getElementById('show-all-pendientes').classList.toggle('active', showAllPendientes);
-                currentPendientesPage = 1;
-                updatePendientesTable();
-            });
-            
-            document.getElementById('show-all-cargados').addEventListener('click', () => {
-                showAllCargados = !showAllCargados;
-                document.getElementById('show-all-cargados').classList.toggle('active', showAllCargados);
-                currentCargadosPage = 1;
-                updateCargadosTable();
-            });
-            
-            // Configurar carga de archivos - IMPORTANTE: Corregido para evitar errores
-            const fileInput = document.getElementById('file-input');
-            const fileUploadContainer = document.getElementById('file-upload-container');
-            const fileName = document.getElementById('file-name');
-            
-            if (fileInput && fileUploadContainer) {
-                fileInput.addEventListener('change', function(e) {
-                    if (this.files && this.files[0]) {
-                        const file = this.files[0];
-                        if (fileName) {
-                            fileName.textContent = file.name;
-                            fileName.style.display = 'block';
+
+                // Configurar búsqueda
+                const searchButton = document.getElementById('search-button');
+                if (searchButton) {
+                    searchButton.addEventListener('click', aplicarFiltros);
+                }
+
+                const searchInput = document.getElementById('search-input');
+                if (searchInput) {
+                    searchInput.addEventListener('keyup', e => {
+                        if (e.key === 'Enter') {
+                            aplicarFiltros();
                         }
-                        
-                        // Procesar el archivo
-                        procesarArchivoCarga(file);
-                    }
-                });
-                
-                // Configurar drag and drop
-                fileUploadContainer.addEventListener('dragover', function(e) {
-                    e.preventDefault();
-                    this.classList.add('drag-over');
-                });
-                
-                fileUploadContainer.addEventListener('dragleave', function() {
-                    this.classList.remove('drag-over');
-                });
-                
-                fileUploadContainer.addEventListener('drop', function(e) {
-                    e.preventDefault();
-                    this.classList.remove('drag-over');
-                    
-                    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-                        const file = e.dataTransfer.files[0];
-                        fileInput.files = e.dataTransfer.files;
-                        if (fileName) {
-                            fileName.textContent = file.name;
-                            fileName.style.display = 'block';
+                    });
+                }
+
+                // Configurar filtros
+                const filterModelo = document.getElementById('filter-modelo');
+                if (filterModelo) {
+                    filterModelo.addEventListener('change', aplicarFiltros);
+                }
+
+                const filterTipo = document.getElementById('filter-tipo');
+                if (filterTipo) {
+                    filterTipo.addEventListener('change', aplicarFiltros);
+                }
+
+                const filterTerminal = document.getElementById('filter-terminal');
+                if (filterTerminal) {
+                    filterTerminal.addEventListener('change', aplicarFiltros);
+                }
+
+                // Configurar opciones de paginación
+                const pendientesPerPage = document.getElementById('pendientes-per-page');
+                if (pendientesPerPage) {
+                    pendientesPerPage.addEventListener('change', (e) => {
+                        pendientesItemsPerPage = parseInt(e.target.value);
+                        currentPendientesPage = 1;
+                        showAllPendientes = false;
+                        const showAllBtn = document.getElementById('show-all-pendientes');
+                        if (showAllBtn) showAllBtn.classList.remove('active');
+                        updatePendientesTable();
+                    });
+                }
+
+                const cargadosPerPage = document.getElementById('cargados-per-page');
+                if (cargadosPerPage) {
+                    cargadosPerPage.addEventListener('change', (e) => {
+                        cargadosItemsPerPage = parseInt(e.target.value);
+                        currentCargadosPage = 1;
+                        showAllCargados = false;
+                        const showAllBtn = document.getElementById('show-all-cargados');
+                        if (showAllBtn) showAllBtn.classList.remove('active');
+                        updateCargadosTable();
+                    });
+                }
+
+                // Configurar botones "Mostrar todos"
+                const showAllPendientesBtn = document.getElementById('show-all-pendientes');
+                if (showAllPendientesBtn) {
+                    showAllPendientesBtn.addEventListener('click', () => {
+                        showAllPendientes = !showAllPendientes;
+                        showAllPendientesBtn.classList.toggle('active', showAllPendientes);
+                        currentPendientesPage = 1;
+                        updatePendientesTable();
+                    });
+                }
+
+                const showAllCargadosBtn = document.getElementById('show-all-cargados');
+                if (showAllCargadosBtn) {
+                    showAllCargadosBtn.addEventListener('click', () => {
+                        showAllCargados = !showAllCargados;
+                        showAllCargadosBtn.classList.toggle('active', showAllCargados);
+                        currentCargadosPage = 1;
+                        updateCargadosTable();
+                    });
+                }
+
+                // Configurar carga de archivos
+                const fileInput = document.getElementById('file-input');
+                const fileUploadContainer = document.getElementById('file-upload-container');
+                const fileName = document.getElementById('file-name');
+
+                if (fileInput && fileUploadContainer) {
+                    console.log("Configurando carga de archivos...");
+
+                    fileInput.addEventListener('change', function (e) {
+                        console.log("Archivo seleccionado:", e.target.files);
+                        if (this.files && this.files[0]) {
+                            const file = this.files[0];
+                            if (fileName) {
+                                fileName.textContent = file.name;
+                                fileName.style.display = 'block';
+                            }
+
+                            // Procesar el archivo
+                            procesarArchivoCarga(file);
                         }
-                        
-                        // Procesar el archivo
-                        procesarArchivoCarga(file);
-                    }
-                });
-            } else {
-                console.error('No se encontraron los elementos para la carga de archivos');
+                    });
+
+                    // Configurar drag and drop
+                    fileUploadContainer.addEventListener('dragover', function (e) {
+                        e.preventDefault();
+                        this.classList.add('drag-over');
+                    });
+
+                    fileUploadContainer.addEventListener('dragleave', function () {
+                        this.classList.remove('drag-over');
+                    });
+
+                    fileUploadContainer.addEventListener('drop', function (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        this.classList.remove('drag-over');
+
+                        console.log("Archivo arrastrado:", e.dataTransfer.files);
+
+                        if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                            const file = e.dataTransfer.files[0];
+
+                            // Asignar el archivo al input para mantener la consistencia
+                            const dataTransfer = new DataTransfer();
+                            dataTransfer.items.add(file);
+                            fileInput.files = dataTransfer.files;
+
+                            if (fileName) {
+                                fileName.textContent = file.name;
+                                fileName.style.display = 'block';
+                            }
+
+                            // Procesar el archivo
+                            procesarArchivoCarga(file);
+                        }
+                    });
+                } else {
+                    console.warn("No se encontraron los elementos para la carga de archivos");
+                }
+
+                // Configurar actualización de datos
+                const refreshButton = document.getElementById('refresh-data');
+                if (refreshButton) {
+                    refreshButton.addEventListener('click', () => {
+                        const loader = document.getElementById('loader');
+                        if (loader) loader.style.display = 'block';
+
+                        // Simular una carga
+                        setTimeout(() => {
+                            actualizarBusesSinCarga();
+                            actualizarGraficos();
+                            updateDashboard();
+                            if (loader) loader.style.display = 'none';
+                        }, 800);
+                    });
+                }
+
+                // Configurar exportación a Excel
+                const excelButton = document.getElementById('download-excel');
+                if (excelButton) {
+                    excelButton.addEventListener('click', exportToExcel);
+                }
+
+                // Configurar exportación a PDF
+                const pdfButton = document.getElementById('download-pdf');
+                if (pdfButton) {
+                    pdfButton.addEventListener('click', exportToPDF);
+                }
+
+                // Configurar impresión
+                const printButton = document.getElementById('print-report');
+                if (printButton) {
+                    printButton.addEventListener('click', printReport);
+                }
+
+                // Actualizar fecha y hora inicial
+                const currentDateElement = document.getElementById('current-date');
+                if (currentDateElement) {
+                    currentDateElement.textContent = formatCurrentDate();
+                }
+
+                const lastUpdateElement = document.getElementById('last-update-time');
+                if (lastUpdateElement) {
+                    lastUpdateElement.textContent = formatCurrentTime();
+                }
+
+                console.log("Aplicación inicializada correctamente");
+
+            } catch (error) {
+                console.error("Error al inicializar la aplicación:", error);
+                alert("Error al inicializar la aplicación: " + error.message);
             }
-            
-            // Configurar actualización de datos
-            const refreshButton = document.getElementById('refresh-data');
-            if (refreshButton) {
-                refreshButton.addEventListener('click', () => {
-                    const loader = document.getElementById('loader');
-                    if (loader) loader.style.display = 'block';
-                    
-                    // Simular una carga
-                    setTimeout(() => {
-                        actualizarBusesSinCarga();
-                        actualizarGraficos();
-                        updateDashboard();
-                        if (loader) loader.style.display = 'none';
-                    }, 800);
-                });
-            }
-            
-            // Configurar exportación a Excel
-            const excelButton = document.getElementById('download-excel');
-            if (excelButton) {
-                excelButton.addEventListener('click', exportToExcel);
-            }
-            
-            // Configurar exportación a PDF
-            const pdfButton = document.getElementById('download-pdf');
-            if (pdfButton) {
-                pdfButton.addEventListener('click', exportToPDF);
-            }
-            
-            // Configurar impresión
-            const printButton = document.getElementById('print-report');
-            if (printButton) {
-                printButton.addEventListener('click', printReport);
-            }
-            
-            // Inicializar los filtros
-            actualizarFiltros();
-            
-            // Inicializar la fecha y hora actual
-            document.getElementById('current-date').textContent = formatCurrentDate();
-            document.getElementById('last-update-time').textContent = formatCurrentTime();
-            
-            console.log('Aplicación inicializada correctamente');
         });
     </script>
+
+
 </body>
+
 </html>
