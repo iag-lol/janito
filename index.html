@@ -661,6 +661,68 @@
                 font-size: 0.9rem;
             }
         }
+
+        /* Estilos para los campos editables */
+        .ubicacion-input {
+            width: 90%;
+            padding: 2px 4px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        .estado-select {
+            width: 90%;
+            padding: 2px 4px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            background-color: white;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .estado-select option[value="Operativo"] {
+            color: #2e7d32;
+            font-weight: 500;
+        }
+
+        .estado-select option[value="Panne"] {
+            color: #c62828;
+            font-weight: 500;
+        }
+
+        .estado-select option[value="Taller Externo"] {
+            color: #f57f17;
+            font-weight: 500;
+        }
+
+        .estado-select option:checked {
+            font-weight: bold;
+        }
+
+        .estado-select[data-estado="Operativo"] {
+            color: #2e7d32;
+            border-color: #2e7d32;
+        }
+
+        .estado-select[data-estado="Panne"] {
+            color: #c62828;
+            border-color: #c62828;
+        }
+
+        .estado-select[data-estado="Taller Externo"] {
+            color: #f57f17;
+            border-color: #f57f17;
+        }
+
+        .ubicacion-input:focus,
+        .estado-select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(75, 134, 180, 0.2);
+        }
     </style>
 </head>
 
@@ -781,12 +843,14 @@
                             <th>Patente</th>
                             <th>Modelo</th>
                             <th>Tipo</th>
+                            <th>Ubicación</th>
                             <th>Estado</th>
+                            <th>Estado Carga</th>
                         </tr>
                     </thead>
                     <tbody id="buses-pendientes-body">
                         <tr>
-                            <td colspan="5" class="text-center">No hay datos disponibles. Por favor, suba un archivo de
+                            <td colspan="7" class="text-center">No hay datos disponibles. Por favor, suba un archivo de
                                 carga.</td>
                         </tr>
                     </tbody>
@@ -961,6 +1025,9 @@
             filteredBusesSinCarga = [...busesSinCarga];
             filteredBusesCargados = [];
             busesCargados = [];
+
+            // Cargar el estado guardado
+            cargarEstadoBuses();
 
             // Inicializar los selectores de filtro
             actualizarFiltros();
@@ -1812,7 +1879,7 @@
 
             if (filteredBusesSinCarga.length === 0) {
                 const row = document.createElement('tr');
-                row.innerHTML = '<td colspan="5" class="text-center">No hay buses pendientes de carga o no se ha subido un archivo de carga.</td>';
+                row.innerHTML = '<td colspan="7" class="text-center">No hay buses pendientes de carga o no se ha subido un archivo de carga.</td>';
                 table.appendChild(row);
 
                 const paginacion = document.getElementById('pendientes-pagination');
@@ -1830,12 +1897,49 @@
                 const row = document.createElement('tr');
 
                 row.innerHTML = `
-            <td class="cell-highlight">${bus.numInterno}</td>
-            <td>${bus.patente}</td>
-            <td>${bus.modelo}</td>
-            <td>${bus.tipo}</td>
-            <td><span class="badge badge-warning">Pendiente</span></td>
-        `;
+                    <td class="cell-highlight">${bus.numInterno}</td>
+                    <td>${bus.patente}</td>
+                    <td>${bus.modelo}</td>
+                    <td>${bus.tipo}</td>
+                    <td>
+                        <input type="text" class="ubicacion-input" value="${bus.ubicacion || ''}" 
+                            data-bus-id="${bus.numInterno}" placeholder="Ingrese ubicación">
+                    </td>
+                    <td>
+                        <select class="estado-select" data-bus-id="${bus.numInterno}" data-estado="${bus.estado || 'Operativo'}">
+                            <option value="Operativo" ${bus.estado === 'Operativo' ? 'selected' : ''}>Operativo</option>
+                            <option value="Panne" ${bus.estado === 'Panne' ? 'selected' : ''}>Panne</option>
+                            <option value="Taller Externo" ${bus.estado === 'Taller Externo' ? 'selected' : ''}>Taller Externo</option>
+                        </select>
+                    </td>
+                    <td><span class="badge badge-warning">Pendiente</span></td>
+                `;
+
+                // Agregar event listeners para los campos editables
+                const ubicacionInput = row.querySelector('.ubicacion-input');
+                const estadoSelect = row.querySelector('.estado-select');
+
+                ubicacionInput.addEventListener('change', function() {
+                    const busId = this.getAttribute('data-bus-id');
+                    const bus = busesSinCarga.find(b => b.numInterno.toString() === busId);
+                    if (bus) {
+                        bus.ubicacion = this.value;
+                        // Guardar en localStorage
+                        guardarEstadoBuses();
+                    }
+                });
+
+                estadoSelect.addEventListener('change', function() {
+                    const busId = this.getAttribute('data-bus-id');
+                    const bus = busesSinCarga.find(b => b.numInterno.toString() === busId);
+                    if (bus) {
+                        bus.estado = this.value;
+                        // Actualizar el atributo data-estado para el color
+                        this.setAttribute('data-estado', this.value);
+                        // Guardar en localStorage
+                        guardarEstadoBuses();
+                    }
+                });
 
                 table.appendChild(row);
             }
@@ -2000,7 +2104,7 @@
 
             // Crear hoja para buses pendientes
             const pendientesData = [
-                ['N° Interno', 'Patente', 'Modelo', 'Tipo', 'Estado']
+                ['N° Interno', 'Patente', 'Modelo', 'Tipo', 'Ubicación', 'Estado', 'Estado Carga']
             ];
 
             filteredBusesSinCarga.forEach(bus => {
@@ -2009,6 +2113,8 @@
                     bus.patente,
                     bus.modelo,
                     bus.tipo,
+                    bus.ubicacion || '',
+                    bus.estado || 'Operativo',
                     'Pendiente'
                 ]);
             });
@@ -2422,6 +2528,31 @@
                 alert("Error al inicializar la aplicación: " + error.message);
             }
         });
+
+        // Función para guardar el estado de los buses en localStorage
+        function guardarEstadoBuses() {
+            const estadoBuses = busesSinCarga.map(bus => ({
+                numInterno: bus.numInterno,
+                ubicacion: bus.ubicacion || '',
+                estado: bus.estado || 'Operativo'
+            }));
+            localStorage.setItem('estadoBuses', JSON.stringify(estadoBuses));
+        }
+
+        // Función para cargar el estado de los buses desde localStorage
+        function cargarEstadoBuses() {
+            const estadoGuardado = localStorage.getItem('estadoBuses');
+            if (estadoGuardado) {
+                const estadoBuses = JSON.parse(estadoGuardado);
+                estadoBuses.forEach(estado => {
+                    const bus = busesSinCarga.find(b => b.numInterno.toString() === estado.numInterno.toString());
+                    if (bus) {
+                        bus.ubicacion = estado.ubicacion;
+                        bus.estado = estado.estado;
+                    }
+                });
+            }
+        }
     </script>
 
 
